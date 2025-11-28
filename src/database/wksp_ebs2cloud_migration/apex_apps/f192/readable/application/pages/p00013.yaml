@@ -1,0 +1,256 @@
+---
+# ====== Page: Landing Page ==================================
+id: 13
+identification: 
+  name: Landing Page
+  alias: LANDING_PAGE
+  title: Landing page
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    td.t-Report-cell {
+        font-size: 16px;
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Nav =========================================
+  id: 23326803288805301
+  identification: 
+    name: Nav
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT 'Home' AS category, 
+             '<a href="f?p=&APP_ID.:7:&SESSION." target="_self">Dashboards</a>' AS link,
+             1 AS sort_order
+      FROM DUAL
+      UNION ALL
+      SELECT 'DM Templates', 
+             '<a href="f?p=&APP_ID.:9:&SESSION." target="_self">Templates</a><br>' || 
+             '<a href="f?p=&APP_ID.:1:&SESSION." target="_self">Configuration</a><br>' || 
+             '<a href="f?p=&APP_ID.:11:&SESSION." target="_self">Migration</a><br>' || 
+             '<a href="f?p=&APP_ID.:10:&SESSION." target="_self">Lookups</a>',
+             2 AS sort_order
+      FROM DUAL
+      UNION ALL
+      SELECT 'Administration', 
+             '<a href="f?p=&APP_ID.:3:&SESSION." target="_self">Environments</a><br>' || 
+             '<a href="f?p=&APP_ID.:4:&SESSION." target="_self">Users</a><br>' || 
+             '<a href="f?p=&APP_ID.:5:&SESSION." target="_self">Audit</a>',
+             3 AS sort_order
+      FROM DUAL
+      ORDER BY sort_order;
+      
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: 5
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - i-h320
+    - t-Region--hideHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    - t-Form--standardPadding
+    - t-Form--large
+    - t-Form--stretchInputs
+    - t-Region-orderBy--center
+    - margin-top-lg
+    - margin-bottom-lg
+    - margin-left-lg
+    - margin-right-lg
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CATEGORY ====================================
+    id: 23326942605805302
+    identification: 
+      column-name: CATEGORY
+      type: Plain Text
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 23327078722805303
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: SORT_ORDER ==================================
+    id: 23327160678805304
+    identification: 
+      column-name: SORT_ORDER
+      type: Plain Text
+
+    heading: 
+      heading: Sort Order
+      alignment: end
+
+    layout: 
+      sequence: 30
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: true
+

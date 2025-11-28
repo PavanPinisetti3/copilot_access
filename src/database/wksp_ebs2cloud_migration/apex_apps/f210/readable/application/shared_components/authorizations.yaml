@@ -1,0 +1,45 @@
+---
+- # ====== Authorization: FND_APEX_AUTHORIZATION ===============
+  id: 45750283304840918
+  identification: 
+    name: FND_APEX_AUTHORIZATION
+
+  subscription: 
+    version-number: 12204947134032
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      begin 
+      return apps.fnd_apex.authorization;
+      end;
+      
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: You are not authorized to access this page.
+
+- # ====== Authorization: Administration Rights ================
+  id: 54514820829205824
+  identification: 
+    name: Administration Rights
+
+  subscription: 
+    version-number: 12204940552353
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: return true;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+

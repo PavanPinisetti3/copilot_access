@@ -1,0 +1,186 @@
+---
+# ====== Theme: Universal Theme ==============================
+id: 42
+identification: 
+  theme-number: 42
+  name: Universal Theme
+  identifier: UNIVERSAL_THEME
+  version: 23.1
+
+navigation: 
+  type: List
+  navigation-bar-type: List
+
+javascript: 
+  file-urls: 
+  - '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.stickyWidget#MIN#.js?v=#APEX_VERSION#'
+  - '#THEME_FILES#js/theme42#MIN#.js?v=#APEX_VERSION#'
+
+css: 
+  file-urls: 
+  - '#THEME_FILES#css/Core#MIN#.css?v=#APEX_VERSION#'
+
+component-defaults: 
+  current-theme-style: Redwood Light - Custom Theme
+  page: Standard
+  navigation-bar-list: Navigation Bar
+  navigation-menu-list-position: Side
+  navigation-menu-list-(top): Top Navigation Menu
+  navigation-menu-list-(side): Side Navigation Menu
+  login-page: Login
+  error-page: Login
+  printer-friendly-page: Standard
+  breadcrumb: Breadcrumb
+  button: Custom Button
+  legacy-calendar: Calendar
+  default-label: Optional
+  optional-label: Optional
+  required-label: Optional
+  list: Links List
+  region: Standard
+  classic-report: Standard
+
+region-defaults: 
+  breadcrumbs: Title Bar
+  charts: Standard
+  forms: Standard
+  lists: Standard
+  reports: Standard
+  wizards: Standard
+  interactive-reports: Interactive Report
+
+dialog-defaults: 
+  dialog-content-region: Blank with Attributes
+  dialog-button-region: Buttons Container
+  dialog-page: Modal Dialog
+
+icons: 
+  library: Font APEX
+
+files: 
+  file-prefix: '#APEX_FILES#themes/theme_42/23.1/'
+
+styles: 
+- # ====== Style: Redwood Light - Custom Theme =================
+  id: 76459286834467290
+  identification: 
+    name: Redwood Light - Custom Theme
+
+  settings: 
+    is-public: true
+    accessibility-tested: false
+
+  css: 
+    file-urls: 
+    - '#APEX_FILES#libraries/oracle-fonts/oraclesans-apex#MIN#.css?v=#APEX_VERSION#'
+    - '#THEME_FILES#css/Redwood#MIN#.css?v=#APEX_VERSION#'
+
+  theme-roller-attributes: 
+    read-only: false
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Redwood-Theme.less'
+    output-css-file-url: '#THEME_DB_FILES#76459286834467290.css'
+    json-configuration: '{"classes":[],"vars":{},"customCSS":".t-Form-label{\n    font-size: small;\n}\n\n.t-Region{\n    border-top: none;\n    border-left: none;\n    border-right:none;\n    border-bottom:none;\n    margin-top: none;\n    margin-bottom: none;\n    margin-left: none;\n    margin-right:none;\n}\n.t-Report-report{\n    border-top: none;\n    text-size-adjust: 100px;\n}\n\n.t-button {\n    height: 40px;           \n    width: 100px;  \n\n    border-radius: 5px;  \n    font-size: 16px;  \n    text-align: center;    \n}\n.a-GV-header {\n    font-size: 15px !important; \n    font-weight: bold !important;\n}\n","useCustomLess":"Y"}'
+
+- # ====== Style: Redwood Light ================================
+  id: 219613834220127850
+  identification: 
+    name: Redwood Light
+
+  settings: 
+    is-public: true
+    accessibility-tested: false
+
+  css: 
+    file-urls: 
+    - '#APEX_FILES#libraries/oracle-fonts/oraclesans-apex#MIN#.css?v=#APEX_VERSION#'
+    - '#THEME_FILES#css/Redwood#MIN#.css?v=#APEX_VERSION#'
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Redwood-Theme.less'
+    output-css-file-url: '#THEME_FILES#css/Redwood-Theme#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita =========================================
+  id: 219613943135127855
+  identification: 
+    name: Vita
+
+  settings: 
+    is-public: true
+    accessibility-tested: true
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita.less'
+    output-css-file-url: '#THEME_FILES#css/Vita#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita - Dark ==================================
+  id: 219614208072127855
+  identification: 
+    name: Vita - Dark
+
+  settings: 
+    is-public: true
+    accessibility-tested: false
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Dark.less'
+    output-css-file-url: '#THEME_FILES#css/Vita-Dark#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita - Red ===================================
+  id: 219614381597127856
+  identification: 
+    name: Vita - Red
+
+  settings: 
+    is-public: true
+    accessibility-tested: false
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Red.less'
+    output-css-file-url: '#THEME_FILES#css/Vita-Red#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita - Slate =================================
+  id: 219614591646127856
+  identification: 
+    name: Vita - Slate
+
+  settings: 
+    is-public: true
+    accessibility-tested: false
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Slate.less'
+    output-css-file-url: '#THEME_FILES#css/Vita-Slate#MIN#.css?v=#APEX_VERSION#'
+
+files: 
+- # ====== File: 76459286834467290.css =========================
+  id: 23335461546845881
+  identification: 
+    file-name: 76459286834467290.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+
+- # ====== File: 35625827540840721.css =========================
+  id: 62432028421239905
+  identification: 
+    file-name: 35625827540840721.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+
+- # ====== File: 17820762585967867.css =========================
+  id: 76459719986467298
+  identification: 
+    file-name: 17820762585967867.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+

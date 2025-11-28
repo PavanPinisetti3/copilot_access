@@ -1,0 +1,725 @@
+---
+# ====== Page: Employees =====================================
+id: 9
+identification: 
+  name: Employees
+  alias: EMPLOYEES
+  title: Employees
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: true
+  list: Do not show Navigation Menu List
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 56337094978312114
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 54324425495204452
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Search Results ==============================
+  id: 56337657646312115
+  identification: 
+    name: Search Results
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+         person_id,
+         image,
+          business_group,
+          gender,
+          full_name,
+          job_name,
+          employee_location,
+          substr(supervisor_name, 0, length(supervisor_name) - 1) supervisor_name,
+          case
+              when gender = 'M' then
+                  'fa fa-mars fa-lg'
+              else
+                  'fa fa-venus fa-lg'
+          end                                                     as gender_icon
+      from
+          apps.xx_emps;
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 56331119640204201
+    appearance: 
+      layout: Grid
+      grid-columns: 3 Columns
+
+    card: 
+      primary-key-column-1: PERSON_ID
+
+    title: 
+      advanced-formatting: false
+      column: FULL_NAME
+
+    subtitle: 
+      advanced-formatting: false
+      column: PERSON_ID
+
+    body: 
+      advanced-formatting: false
+      column: EMPLOYEE_LOCATION
+
+    secondary-body: 
+      advanced-formatting: true
+      html-expression: 'Supervisor: &SUPERVISOR_NAME.'
+
+    icon-and-badge: 
+      icon-source: Icon Class Column
+      icon-column: GENDER_ICON
+      icon-position: Start
+
+    media: 
+      advanced-formatting: false
+      source: BLOB Column
+      blob-column: IMAGE
+      position: Body
+      appearance: Square
+      sizing: Cover
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+- # ====== Region: Search ======================================
+  id: 56337794436312115
+  identification: 
+    name: Search
+    type: Faceted Search
+
+  source: 
+    filtered-region: Search Results # 56337657646312115
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: Selector
+      current-facets-selector: '#active_facets'
+      show-total-row-count: Yes
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P9_GENDER ====================================
+    id: 56330893229204199
+    identification: 
+      name: P9_GENDER
+      type: Checkbox Group
+
+    label: 
+      label: Gender
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 20
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Female;F,Male;M'
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: GENDER
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P9_BUSINESS_GROUP ============================
+    id: 56330937262204200
+    identification: 
+      name: P9_BUSINESS_GROUP
+      type: Checkbox Group
+
+    label: 
+      label: Business Group
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct business_group d, business_group r from apps.xx_emps
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: BUSINESS_GROUP
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P9_LOCATION ==================================
+    id: 56331225796204202
+    identification: 
+      name: P9_LOCATION
+      type: Checkbox Group
+
+    label: 
+      label: Location
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        SELECT distinct employee_location d, employee_location r from apps.xx_emps
+        
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: EMPLOYEE_LOCATION
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P9_SUPERVISOR_NAME ===========================
+    id: 56331302546204203
+    identification: 
+      name: P9_SUPERVISOR_NAME
+      type: Checkbox Group
+
+    label: 
+      label: Supevisor
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 50
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select distinct substr(supervisor_name, 0, length(supervisor_name) - 1) d, substr(supervisor_name, 0, length(supervisor_name) - 1) r from apps.xx_emps
+        
+        
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: SUPERVISOR_NAME
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P9_SEARCH ====================================
+    id: 56338321024312116
+    identification: 
+      name: P9_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): BUSINESS_GROUP,EMPLOYEE_NUMBER,FIRST_NAME,LAST_NAME,FULL_NAME,GENDER,EMAIL_ADDRESS,EMPLOYEE_LOCATION,SUPERVISOR_EMPLOYEE_NUMBER,SUPERVISOR_NAME,WORK_TELEPHONE_NUMBER,JOB_NAME,POSITION_NAME,DEFAULT_CHARGE_ACCOUNT,LEDGER_NAME
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  filters: 
+  - # ====== Filter: P9_GENDER ===================================
+    id: 56330893229204199
+    identification: 
+      name: P9_GENDER
+      type: Checkbox Group
+
+    label: 
+      label: Gender
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Female;F,Male;M'
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: GENDER
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P9_BUSINESS_GROUP ===========================
+    id: 56330937262204200
+    identification: 
+      name: P9_BUSINESS_GROUP
+      type: Checkbox Group
+
+    label: 
+      label: Business Group
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct business_group d, business_group r from apps.xx_emps
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: BUSINESS_GROUP
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P9_LOCATION =================================
+    id: 56331225796204202
+    identification: 
+      name: P9_LOCATION
+      type: Checkbox Group
+
+    label: 
+      label: Location
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        SELECT distinct employee_location d, employee_location r from apps.xx_emps
+        
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: EMPLOYEE_LOCATION
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P9_SUPERVISOR_NAME ==========================
+    id: 56331302546204203
+    identification: 
+      name: P9_SUPERVISOR_NAME
+      type: Checkbox Group
+
+    label: 
+      label: Supevisor
+
+    layout: 
+      sequence: 50
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select distinct substr(supervisor_name, 0, length(supervisor_name) - 1) d, substr(supervisor_name, 0, length(supervisor_name) - 1) r from apps.xx_emps
+        
+        
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: SUPERVISOR_NAME
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P9_SEARCH ===================================
+    id: 56338321024312116
+    identification: 
+      name: P9_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): BUSINESS_GROUP,EMPLOYEE_NUMBER,FIRST_NAME,LAST_NAME,FULL_NAME,GENDER,EMAIL_ADDRESS,EMPLOYEE_LOCATION,SUPERVISOR_EMPLOYEE_NUMBER,SUPERVISOR_NAME,WORK_TELEPHONE_NUMBER,JOB_NAME,POSITION_NAME,DEFAULT_CHARGE_ACCOUNT,LEDGER_NAME
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+- # ====== Region: Button Bar ==================================
+  id: 56338621247312121
+  identification: 
+    name: Button Bar
+    type: Static Content
+
+  source: 
+    html-code: <div id="active_facets"></div>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noPadding
+    - t-ButtonRegion--noUI
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+buttons: 
+- # ====== Button: RESET =======================================
+  id: 56339110909312122
+  identification: 
+    button-name: RESET
+    label: Reset
+
+  layout: 
+    sequence: 10
+    region: Button Bar # 56338621247312121
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:9:&SESSION.::&DEBUG.:RR,9::'
+      page: 9 # Employees
+      clear-cache: RR,9
+
+    warn-on-unsaved-changes: Do Not Check
+

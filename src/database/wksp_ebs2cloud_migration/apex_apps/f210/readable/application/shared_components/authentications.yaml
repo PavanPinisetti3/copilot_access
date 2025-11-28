@@ -1,0 +1,43 @@
+---
+- # ====== Authentication: Application Express Accounts ========
+  id: 54324207079204427
+  identification: 
+    name: Application Express Accounts
+
+  subscription: 
+    version-number: 12204940552433
+
+  settings: 
+    type: Oracle APEX Accounts
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+
+- # ====== Authentication: FND_APEX_AUTHENTICATION =============
+  id: 54732921222059780
+  identification: 
+    name: FND_APEX_AUTHENTICATION
+
+  subscription: 
+    version-number: 12204947134201
+
+  settings: 
+    type: Custom
+    sentry-function-name: apps.fnd_apex.authentication
+    enable-legacy-authentication-attributes: false
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+

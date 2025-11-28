@@ -1,0 +1,1728 @@
+---
+# ====== Page:  P_Environments ===============================
+id: 3
+identification: 
+  name: ' P_Environments'
+  alias: ENVIRONMENTS
+  title: ' '
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: ' '
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 77841750070402757
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 196324898409373257
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: R_Project_Details ===========================
+  id: 77848417362203879
+  identification: 
+    name: R_Project_Details
+    title: Project Details
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: PROJECT_DETAILS
+    include-rowid-column: true
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 77848478694203880
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: true
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: false
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+      - Save Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 77854211887198322
+      identification: 
+        name: Primary Report
+        alias: 122271
+
+  columns: 
+  - # ====== Column: PROJECT_NAME ================================
+    id: 77848611401203881
+    identification: 
+      column-name: PROJECT_NAME
+      type: Popup LOV
+
+    heading: 
+      heading: ' PROJECT_NAME'
+      alignment: start
+
+    settings: 
+      display-as: Inline Popup
+      initial-fetch: Automatic
+      manual-entry: false
+      fetch-on-search: false
+
+    search: 
+      match-type: Contains
+      case-sensitive: false
+      minimum-characters: 0
+
+    multiple-values: 
+      type: No
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 50
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Dev Migration;Dev Migration,Prod Migration;Prod Migration,UAT Migration;UAT Migration'
+      display-extra-values: true
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: PROJECT_NAME
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: true
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PROJECT_DESCRIPTION =========================
+    id: 77848704630203882
+    identification: 
+      column-name: PROJECT_DESCRIPTION
+      type: Text Field
+
+    heading: 
+      heading: PROJECT_DESCRIPTION
+      alignment: center
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 200
+
+    source: 
+      type: Database Column
+      database-column: PROJECT_DESCRIPTION
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: DATE_FORMAT =================================
+    id: 77848807291203883
+    identification: 
+      column-name: DATE_FORMAT
+      type: Date Picker
+
+    heading: 
+      heading: DATE_FORMAT
+      alignment: center
+
+    settings: 
+      show-time: false
+      display-as: Popup
+      minimum-date: None
+      maximum-date: None
+      multiple-months: No
+      use-defaults: true
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: DATE_FORMAT
+      data-type: DATE
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+      date-ranges: All
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: CURRENCY_FORMAT =============================
+    id: 77848891418203884
+    identification: 
+      column-name: CURRENCY_FORMAT
+      type: Text Field
+
+    heading: 
+      heading: CURRENCY_FORMAT
+      alignment: center
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 3
+
+    source: 
+      type: Database Column
+      database-column: CURRENCY_FORMAT
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: NUMBER_FORMAT ===============================
+    id: 77848971638203885
+    identification: 
+      column-name: NUMBER_FORMAT
+      type: Number Field
+
+    heading: 
+      heading: NUMBER_FORMAT
+      alignment: center
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: NUMBER_FORMAT
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: ENVIRONMENT_TYPE ============================
+    id: 77849067137203886
+    identification: 
+      column-name: ENVIRONMENT_TYPE
+      type: Popup LOV
+
+    heading: 
+      heading: ENVIRONMENT_TYPE
+      alignment: start
+
+    settings: 
+      display-as: Inline Popup
+      initial-fetch: Automatic
+      manual-entry: false
+      fetch-on-search: false
+
+    search: 
+      match-type: Contains
+      case-sensitive: false
+      minimum-characters: 0
+
+    multiple-values: 
+      type: No
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 20
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:DEV;DEV,UAT;UAT,SIT;SIT,PROD;PROD'
+      display-extra-values: true
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: ENVIRONMENT_TYPE
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 77850781613203903
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 77850904355203904
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: ROWID =======================================
+    id: 78607282599162712
+    identification: 
+      column-name: ROWID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 90
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ROWID
+      data-type: ROWID
+      primary-key: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+      page-header-text: Project Details
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: R_Oracle_EBS_Environment	 ===================
+  id: 77851559724203911
+  identification: 
+    name: 'R_Oracle_EBS_Environment	'
+    title: 'Oracle EBS Environment	'
+    type: Static Content
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 5
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent14
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: R_Oracle_Fusion_Environment =================
+  id: 77852415658203919
+  identification: 
+    name: R_Oracle_Fusion_Environment
+    title: Oracle Fusion Environment
+    type: Static Content
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 5
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent14
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: I3_STORE =================================
+  id: 36597824404522279
+  identification: 
+    name: I3_STORE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 110
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_ENVIRONMENT_NAME ======================
+  id: 77851637265203912
+  identification: 
+    name: I3_ENVIRONMENT_NAME
+    type: Text Field
+
+  label: 
+    label: ENVIRONMENT NAME
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: 'R_Oracle_EBS_Environment	' # 77851559724203911
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: PROD (Production)
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_DB_LINK_NAME ==========================
+  id: 77851727962203913
+  identification: 
+    name: I3_DB_LINK_NAME
+    type: Text Field
+
+  label: 
+    label: DB LINK NAME
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: 'R_Oracle_EBS_Environment	' # 77851559724203911
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: PROD_LINK
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_DB_IP_ADDR ============================
+  id: 77851837736203914
+  identification: 
+    name: I3_DB_IP_ADDR
+    type: Text Field
+
+  label: 
+    label: DB IP ADDR
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: 'R_Oracle_EBS_Environment	' # 77851559724203911
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 192.168.1.100
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_DB_PORT ===============================
+  id: 77851988844203915
+  identification: 
+    name: I3_DB_PORT
+    type: Text Field
+
+  label: 
+    label: ' DB PORT'
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: 'R_Oracle_EBS_Environment	' # 77851559724203911
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1521
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_DB_SERVICE_NAME =======================
+  id: 77852066322203916
+  identification: 
+    name: I3_DB_SERVICE_NAME
+    type: Text Field
+
+  label: 
+    label: DB SERVICE NAME
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: 'R_Oracle_EBS_Environment	' # 77851559724203911
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: EBS_PROD
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_POD_NAME ==============================
+  id: 77852716120203922
+  identification: 
+    name: I3_POD_NAME
+    type: Popup LOV
+
+  label: 
+    label: ' POD NAME'
+    alignment: Left
+
+  settings: 
+    display-as: Inline Popup
+    initial-fetch: Automatic
+    manual-entry: true
+    fetch-on-search: false
+
+  search: 
+    match-type: Contains
+    case-sensitive: false
+    minimum-characters: 0
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: R_Oracle_Fusion_Environment # 77852415658203919
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:POD1;POD1,POD2;POD2,POD3;POD3,POD4;POD4'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: Static
+    static-value: POD1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_POD_URL ===============================
+  id: 77852863878203924
+  identification: 
+    name: I3_POD_URL
+    type: Text Field
+
+  label: 
+    label: POD URL
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: R_Oracle_Fusion_Environment # 77852415658203919
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 'https://pod1.example.com'
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_FUSION_USERNAME =======================
+  id: 77853110119203926
+  identification: 
+    name: I3_FUSION_USERNAME
+    type: Text Field
+
+  label: 
+    label: ' FUSION USERNAME'
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: R_Oracle_Fusion_Environment # 77852415658203919
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: user1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I3_FUSION_PASSWORD =======================
+  id: 78277833813460778
+  identification: 
+    name: I3_FUSION_PASSWORD
+    type: Text Field
+
+  label: 
+    label: FUSION PASSWORD
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: R_Oracle_Fusion_Environment # 77852415658203919
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: pass1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1 
+      FROM USER_MANAGEMENT 
+      WHERE UPPER(USER_NAME) = UPPER(:APP_USER)
+      AND (USER_ROLE = 'Admin Consultant'
+      OR USER_ROLE = 'DM Consultant')
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: change in environment name ==========
+  id: 77852211485203917
+  identification: 
+    name: change in environment name
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - I3_ENVIRONMENT_NAME
+
+  configuration: 
+    build-option: Commented Out # 196324354388373242
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 77852238135203918
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        if :P3_ENVIRONMENT_NAME = 'PROD (Production)' then
+        :P3_DB_IP_ADDR := '192.168.1.100';
+        :P3_DB_PORT :='1521';
+        :P3_DB_SERVICE_NAME := 'EBS_PROD';
+        
+        :P3_DB_LINK_NAME := 'PROD_LINK';
+        
+        elsif :P3_ENVIRONMENT_NAME = 'DEV (Development)' then
+        :P3_DB_IP_ADDR := '192.168.1.101';
+        :P3_DB_PORT :='1521';
+        :P3_DB_SERVICE_NAME := 'EBS_DEV';
+        :P3_DB_LINK_NAME := 'DEV_LINK';
+        
+        
+        elsif :P3_ENVIRONMENT_NAME = 'TEST (Testing/QA)' then
+        :P3_DB_IP_ADDR := '192.168.1.102';
+        :P3_DB_PORT :='1521';
+        :P3_DB_SERVICE_NAME := 'EBS_TEST';
+        :P3_DB_LINK_NAME := 'TEST_LINK';
+        
+        end if;
+      items-to-submit: 
+      - I3_ENVIRONMENT_NAME
+      items-to-return: 
+      - I3_DB_LINK_NAME
+      - I3_DB_IP_ADDR
+      - I3_DB_PORT
+      - I3_DB_SERVICE_NAME
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: change in environment name # 77852211485203917
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 78605189132162691
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+            -- Create the collection or clear it if already exists
+             IF apex_collection.collection_exists('USER_INFO_COLLECTION') THEN 
+                    apex_collection.delete_collection('USER_INFO_COLLECTION');
+                    end if;
+        
+            APEX_COLLECTION.CREATE_COLLECTION(p_collection_name => 'USER_INFO_COLLECTION');
+        
+            -- Add values from page items and application user to the collection
+            APEX_COLLECTION.ADD_MEMBER(
+                p_collection_name => 'USER_INFO_COLLECTION',
+                p_c001            => :P3_ENVIRONMENT_NAME,  -- Environment name
+                p_c002            => :P3_POD_NAME,           -- Pod name
+                p_c003            => SYS_CONTEXT('USERENV', 'SESSION_USER')  -- Application user
+            );
+        END;
+        
+      items-to-submit: 
+      - I3_ENVIRONMENT_NAME
+      - I3_POD_NAME
+
+    execution: 
+      sequence: 20
+      event: change in environment name # 77852211485203917
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 77893537555066003
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: NATIVE_IG|REGION TYPE|apexbeginrecordedit
+    selection-type: Region
+    region: R_Project_Details # 77848417362203879
+
+  configuration: 
+    build-option: Commented Out # 196324354388373242
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 77893719508066004
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+            -- Create the collection or clear it if already exists
+            APEX_COLLECTION.CREATE_COLLECTION(p_collection_name => 'USER_INFO_COLLECTION');
+        
+            -- Add values from page items and application user to the collection
+            APEX_COLLECTION.ADD_MEMBER(
+                p_collection_name => 'USER_INFO_COLLECTION',
+                p_c001            => :P3_ENVIRONMENT_NAME,  -- Environment name
+                p_c002            => :P3_POD_NAME,           -- Pod name
+                p_c003            => SYS_CONTEXT('USERENV', 'SESSION_USER')  -- Application user
+            );
+        END;
+        
+
+    execution: 
+      sequence: 10
+      event: New_1 # 77893537555066003
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: CHANGE IN POD NAME ==================
+  id: 78604579662162685
+  identification: 
+    name: CHANGE IN POD NAME
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - I3_POD_NAME
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 78604624285162686
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |2
+         if :I3_POD_NAME = 'POD1' THEN
+           :I3_POD_URL := 'https://pod1.example.com';
+           :I3_FUSION_USERNAME:='user1';
+           :I3_FUSION_PASSWORD := 'pass1';
+        
+           ELSIF :I3_POD_NAME = 'POD2' THEN
+           :I3_POD_URL := 'https://pod2.example.com';
+           :I3_FUSION_USERNAME:='user2';
+           :I3_FUSION_PASSWORD := 'pass2';
+        
+            ELSIF :I3_POD_NAME = 'POD3' THEN
+           :I3_POD_URL := 'https://pod3.example.com';
+           :I3_FUSION_USERNAME:='user3';
+           :I3_FUSION_PASSWORD := 'pass3';
+        
+            ELSIF :I3_POD_NAME = 'POD4' THEN
+           :I3_POD_URL := 'https://pod4.example.com';
+           :I3_FUSION_USERNAME:='user4';
+           :I3_FUSION_PASSWORD := 'pass4';
+        END IF;
+         
+      items-to-submit: 
+      - I3_POD_NAME
+      items-to-return: 
+      - I3_FUSION_PASSWORD
+      - null
+      - I3_POD_URL
+      - I3_FUSION_USERNAME
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: CHANGE IN POD NAME # 78604579662162685
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 78605318766162692
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+            
+             IF apex_collection.collection_exists('USER_INFO_COLLECTION') THEN 
+                    apex_collection.delete_collection('USER_INFO_COLLECTION');
+                    end if;
+        
+            APEX_COLLECTION.CREATE_COLLECTION(p_collection_name => 'USER_INFO_COLLECTION');
+        
+             
+            APEX_COLLECTION.ADD_MEMBER(
+                p_collection_name => 'USER_INFO_COLLECTION',
+                p_c001            => :I3_ENVIRONMENT_NAME,  -- Environment name
+                p_c002            => :I3_POD_NAME,           -- Pod name
+                p_c003            => SYS_CONTEXT('USERENV', 'SESSION_USER')  -- Application user
+            );
+        END;
+        
+      items-to-submit: 
+      - I3_ENVIRONMENT_NAME
+      - I3_POD_NAME
+
+    execution: 
+      sequence: 20
+      event: CHANGE IN POD NAME # 78604579662162685
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+processes: 
+- # ====== Process: PR_Project Details - Save Interactive Grid D
+  id: 77850947102203905
+  identification: 
+    name: PR_Project Details - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: R_Project_Details # 77848417362203879
+
+  settings: 
+    target-type: PL/SQL Code
+    pl/sql-code-to-insert/update/delete: |
+      BEGIN
+          IF :APEX$ROW_STATUS = 'C' THEN
+              -- Insert new record
+              INSERT INTO PROJECT_DETAILS 
+                  (PROJECT_NAME, PROJECT_DESCRIPTION, DATE_FORMAT, CURRENCY_FORMAT, NUMBER_FORMAT, ENVIRONMENT_TYPE) 
+              VALUES 
+                  (:PROJECT_NAME, :PROJECT_DESCRIPTION, :DATE_FORMAT, :CURRENCY_FORMAT, :NUMBER_FORMAT, :ENVIRONMENT_TYPE);
+          
+          ELSIF :APEX$ROW_STATUS = 'U' THEN
+              -- Update existing record using ROW_ID
+              UPDATE PROJECT_DETAILS 
+              SET 
+                  PROJECT_NAME = :PROJECT_NAME,
+                  PROJECT_DESCRIPTION = :PROJECT_DESCRIPTION,
+                  DATE_FORMAT = :DATE_FORMAT,
+                  CURRENCY_FORMAT = :CURRENCY_FORMAT,
+                  NUMBER_FORMAT = :NUMBER_FORMAT,
+                  ENVIRONMENT_TYPE = :ENVIRONMENT_TYPE
+              WHERE ROWID = :ROWID;
+          
+          ELSIF :APEX$ROW_STATUS = 'D' THEN
+              -- Delete record using ROW_ID
+              DELETE FROM PROJECT_DETAILS 
+              WHERE ROWID = :ROWID;
+          END IF;
+      END;
+      
+    prevent-lost-updates: true
+    lock-row: Yes
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: PR_Get_Page_d ==============================
+  id: 77893473212066002
+  identification: 
+    name: PR_Get_Page_d
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      BEGIN
+          -- Create or populate an APEX collection with the environment, pod name, and app user
+          APEX_COLLECTION.CREATE_COLLECTION(p_collection_name => 'USER_INFO_COLLECTION');
+      
+          -- Add values to the collection: environment name, pod name, and app user
+          APEX_COLLECTION.ADD_MEMBER(
+              p_collection_name => 'USER_INFO_COLLECTION',
+              p_c001            => :I3_ENVIRONMENT_NAME,  -- Environment name
+              p_c002            => :I3_POD_NAME,           -- Pod name
+              p_c003            => SYS_CONTEXT('USERENV', 'SESSION_USER')  -- Application user
+          );
+        SELECT c002
+          INTO :I3_STORE
+          FROM apex_collections
+          WHERE collection_name = 'USER_INFO_COLLECTION' ;
+          --   AND seq_id = 1;  
+          
+      END;
+      
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+

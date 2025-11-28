@@ -1,0 +1,28 @@
+.t-Form-label {
+  font-size: small;
+}
+.t-Region {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  margin-top: none;
+  margin-bottom: none;
+  margin-left: none;
+  margin-right: none;
+}
+.t-Report-report {
+  border-top: none;
+  text-size-adjust: 100px;
+}
+.t-button {
+  height: 40px;
+  width: 100px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+.a-GV-header {
+  font-size: 15px !important;
+  font-weight: bold !important;
+}

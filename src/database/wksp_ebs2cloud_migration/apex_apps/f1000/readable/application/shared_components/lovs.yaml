@@ -1,0 +1,23 @@
+---
+- # ====== List of Values: APPLICATION USER ROLES ==============
+  id: 25860964944143086
+  identification: 
+    name: APPLICATION USER ROLES
+
+  subscription: 
+    version-number: 12212737029545
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select role_name,role_id
+      from apex_appl_acl_roles
+      where application_id = :APP_ID
+
+  column-mapping: 
+    return: ROLE_ID
+    display: ROLE_NAME
+    default-sort: ROLE_NAME
+    sort-direction: Ascending (Nulls Last)
+

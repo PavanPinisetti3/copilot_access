@@ -1,0 +1,640 @@
+---
+# ====== Page: Customer Locations ============================
+id: 4
+identification: 
+  name: Customer Locations
+  alias: CUSTOMER-LOCATIONS
+  title: Customer Locations
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: true
+  list: Do not show Navigation Menu List
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 56821073355036786
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 54324425495204452
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Map =========================================
+  id: 56821561780036816
+  identification: 
+    name: Map
+    type: Map
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select * from apps.xx_customer_locations
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 56823624085036883
+    map: 
+      background: Built-In
+      standard: Oracle World Map
+      dark-mode: Same as Standard
+      height: 640
+
+    controls: 
+      navigation-bar: Zoom and Compass
+      navigation-bar-position: End
+      options: 
+      - Mousewheel Zoom
+      - Rectangle Zoom
+      - Scale Bar
+      - Overview Map
+      - Infinite Map
+      - Circle Tool
+      - Distance Tool
+
+    initial-position-and-zoom: 
+      type: Based on Spatial Results
+
+    legend: 
+      show: true
+      position: End
+
+    attributes: 
+      messages-position: Below
+      unit-system: Imperial
+
+    performance: 
+      lazy-loading: true
+
+    layers: 
+    - # ====== Layer: Customer Locations ===========================
+      id: 56823992812036920
+      identification: 
+        name: Customer Locations
+        layer-type: Points
+
+      layout: 
+        sequence: 10
+
+      source: 
+        location: Region Source
+        use-spatial-index: false
+
+      column-mapping: 
+        geometry-column-data-type: Longitude/Latitude
+        longitude-column: LONGITUDE
+        latitude-column: LATITUDE
+
+      point-objects: 
+        style: SVG
+        shape: Default
+        shape-scale: 2
+
+      appearance: 
+        fill-color: '#ff0000'
+        stroke-color: '#410808'
+
+      point-clustering: 
+        enable: false
+
+      tooltip: 
+        advanced-formatting: true
+        html-expression: |
+          <h4><b>&CUSTOMER_NAME.</b></h4>
+          <h5><b>Address: </b>&ADDRESS1.</h5>
+          <h5><b>Postal Code: </b>&POSTAL_CODE.</h5>
+
+      info-window: 
+        advanced-formatting: false
+
+      legend: 
+        show: true
+        enable-to-hide: true
+
+- # ====== Region: Search ======================================
+  id: 56821698435036816
+  identification: 
+    name: Search
+    type: Faceted Search
+
+  source: 
+    filtered-region: Map # 56821561780036816
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: Selector
+      current-facets-selector: '#active_facets'
+      show-total-row-count: Yes
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P4_COUNTRY ===================================
+    id: 56332227025204212
+    identification: 
+      name: P4_COUNTRY
+      type: Checkbox Group
+
+    label: 
+      label: Country
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 20
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct country d, country r from apps.xx_customer_locations
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: COUNTRY
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P4_STATE =====================================
+    id: 56332273493204213
+    identification: 
+      name: P4_STATE
+      type: Checkbox Group
+
+    label: 
+      label: State
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct state d, state r from apps.xx_customer_locations
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: STATE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P4_CITY ======================================
+    id: 56332400104204214
+    identification: 
+      name: P4_CITY
+      type: Checkbox Group
+
+    label: 
+      label: City
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct city d, city r from apps.xx_customer_locations
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: CITY
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P4_SEARCH ====================================
+    id: 56822229568036857
+    identification: 
+      name: P4_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): CUSTOMER_NUMBER,CUSTOMER_NAME,SITE_NUMBER,ADDRESS1,ADDRESS2,ADDRESS3,ADDRESS4,CITY,POSTAL_CODE,STATE,COUNTRY,BILL_TO_LOCATION,SHIP_TO_LOCATION
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  filters: 
+  - # ====== Filter: P4_COUNTRY ==================================
+    id: 56332227025204212
+    identification: 
+      name: P4_COUNTRY
+      type: Checkbox Group
+
+    label: 
+      label: Country
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct country d, country r from apps.xx_customer_locations
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: COUNTRY
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P4_STATE ====================================
+    id: 56332273493204213
+    identification: 
+      name: P4_STATE
+      type: Checkbox Group
+
+    label: 
+      label: State
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct state d, state r from apps.xx_customer_locations
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STATE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P4_CITY =====================================
+    id: 56332400104204214
+    identification: 
+      name: P4_CITY
+      type: Checkbox Group
+
+    label: 
+      label: City
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: select distinct city d, city r from apps.xx_customer_locations
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: CITY
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P4_SEARCH ===================================
+    id: 56822229568036857
+    identification: 
+      name: P4_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): CUSTOMER_NUMBER,CUSTOMER_NAME,SITE_NUMBER,ADDRESS1,ADDRESS2,ADDRESS3,ADDRESS4,CITY,POSTAL_CODE,STATE,COUNTRY,BILL_TO_LOCATION,SHIP_TO_LOCATION
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+- # ====== Region: Button Bar ==================================
+  id: 56822435924036870
+  identification: 
+    name: Button Bar
+    type: Static Content
+
+  source: 
+    html-code: <div id="active_facets"></div>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noPadding
+    - t-ButtonRegion--noUI
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+buttons: 
+- # ====== Button: RESET =======================================
+  id: 56823025224036877
+  identification: 
+    button-name: RESET
+    label: Reset
+
+  layout: 
+    sequence: 10
+    region: Button Bar # 56822435924036870
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:RR,4::'
+      page: 4 # Customer Locations
+      clear-cache: RR,4
+
+    warn-on-unsaved-changes: Do Not Check
+

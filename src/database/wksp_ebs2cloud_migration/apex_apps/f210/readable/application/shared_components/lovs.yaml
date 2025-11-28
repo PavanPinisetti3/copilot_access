@@ -1,0 +1,20 @@
+---
+- # ====== List of Values: LOGIN_REMEMBER_USERNAME =============
+  id: 54517784223205971
+  identification: 
+    name: LOGIN_REMEMBER_USERNAME
+
+  subscription: 
+    version-number: 12204940552353
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Remember username ============================
+    id: 54518234701205989
+    entry: 
+      sequence: 10
+      display: Remember username
+      return: Y
+

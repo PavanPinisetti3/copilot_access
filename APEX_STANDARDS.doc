@@ -1,0 +1,775 @@
+==================================================
+ORACLE APEX REVIEW STANDARDS AND TEMPLATES
+==================================================
+
+1. REVIEW FORMAT REQUIREMENTS
+--------------------------------------------------
+All reviews must follow this exact structure and formatting:
+
+╔══════════════════════════════════════════════════╗
+║             DOCUMENT HEADER TEMPLATE              ║
+╚══════════════════════════════════════════════════╝
+
+COMPONENT REVIEW
+═══════════════
+Use ASCII box drawing characters for all tables.
+Required columns: Page | Current Name | Required Name | Status
+
+CODE ANALYSIS
+════════════
+Show detailed code review with current code and issues.
+
+CORRECTED CODE EXAMPLES
+═════════════════════
+Provide properly formatted solution code.
+
+2. TABLE FORMATTING RULES
+--------------------------------------------------
+a) Component Review Table Format:
+╔══════╦═══════════════════╦═══════════════════╦══════════════════════╗
+║ Page ║ Current Name      ║ Required Name     ║ Status               ║
+╠══════╬═══════════════════╬═══════════════════╬══════════════════════╣
+║  #   ║ Component Name    ║ Standard Name     ║ FOLLOWS/NON-COMP   ║
+╚══════╩═══════════════════╩═══════════════════╩══════════════════════╝
+
+b) Code Analysis Table Format:
+╔══════╦═══════════════╦════════════════════════════════════════════╗
+║ Page ║ Component     ║ Issues Found                               ║
+╠══════╬═══════════════╬════════════════════════════════════════════╣
+║  #   ║ Name         ║ List issues with current code              ║
+╚══════╩═══════════════╩════════════════════════════════════════════╝
+
+3. NAMING CONVENTIONS
+--------------------------------------------------
+Component Type | Format                  | Example
+--------------|-------------------------|------------------
+Region        | R_<PURPOSE>_<DETAIL>    | R_EMP_REPORT
+Page Item     | P<page>_<COLUMN_USE>    | P1_EMP_NAME
+Button        | BTN_<ACTION>_<DETAIL>   | BTN_SAVE_EMP
+Process       | PR_<PURPOSE>_<ACTION>   | PR_EMP_INSERT
+Dynamic Action| <EVENT>_<TARGET>_DY     | CHANGE_EMP_DY
+Validation    | _VAL_<ITEM>_<CONDITION> | _VAL_P1_NAME_NN
+
+4. CODE REVIEW CRITERIA
+--------------------------------------------------
+For each code component, check and document:
+
+a) SQL Queries:
+   - Keywords in UPPERCASE
+   - Explicit column selection (no SELECT *)
+   - Table aliases
+   - Proper indentation
+   - Column aliases with AS
+   Example format:
+   ```sql
+   SELECT E.EMPLOYEE_ID    AS EMP_ID,
+          E.EMPLOYEE_NAME  AS EMP_NAME
+   FROM   EMPLOYEES E
+   WHERE  E.DEPT_ID = :P1_DEPT
+   ```
+
+b) PL/SQL Code:
+   - Proper variable prefixes:
+     * lc_ for VARCHAR2/CHAR
+     * ln_ for NUMBER
+     * ld_ for DATE
+     * lb_ for BOOLEAN
+   - Exception handling
+   - Debug instrumentation
+   - Proper indentation
+   Example format:
+   ```sql
+   DECLARE
+       lc_name    VARCHAR2(100);
+       ln_count   NUMBER;
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start process');
+
+       SELECT COUNT(*)
+       INTO   ln_count
+       FROM   EMPLOYEES;
+
+       APEX_DEBUG.MESSAGE('Found ' || ln_count || ' employees');
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+5. REVIEW DOCUMENT SECTIONS
+--------------------------------------------------
+Each review must include these sections in order:
+
+a) Document Header
+b) Component Review table
+c) Code Analysis table
+d) Corrected Code Examples
+e) Compliance Summary
+
+6. STATUS DESCRIPTIONS
+--------------------------------------------------
+Use these exact status messages:
+- FOLLOWS
+- NON-FOLLOWS - Missing prefix
+- NON-FOLLOWS - Wrong format
+- NON-FOLLOWS - Not descriptive
+- NON-FOLLOWS - Spelling error
+- FOLLOWS (System Page)
+- FOLLOWS (Page Name)
+
+7. COMPLIANCE SUMMARY FORMAT
+--------------------------------------------------
+COMPLIANCE SUMMARY
+════════════════
+Total Components: ##
+FOLLOWS: ##
+Non-FOLLOWS: ##
+Compliance Rate: ##.##%
+
+Key Issues:
+1. Issue 1
+2. Issue 2
+...
+
+Recommendations:
+1. Recommendation 1
+2. Recommendation 2
+...
+
+8. ASCII BOX DRAWING CHARACTERS
+--------------------------------------------------
+╔ ╗ ╚ ╝ ╠ ╣ ═ ║ ╦ ╩ ╬
+
+Use these for all tables and section headers.
+
+9. CODE BLOCK FORMATTING
+--------------------------------------------------
+Always use triple backticks for code blocks:
+```sql
+code here
+```
+
+10. REVIEW CHECKLIST
+--------------------------------------------------
+□ Document uses correct ASCII box characters
+□ All tables properly aligned
+□ Component review table complete
+□ Code analysis includes current code
+□ Corrected code examples provided
+□ Compliance summary included
+□ All status messages follow standard format
+□ Code blocks properly formatted
+□ Recommendations are specific and actionable
+□ Document follows section order
+
+11. HTML STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) General Rules:
+   - NEVER embed full HTML documents (<DOCTYPE>, <html>, <head>, <body>)
+   - Embed only SNIPPET code (div, form elements, sections)
+   - Use semantic HTML5 tags (header, nav, main, section, article, footer)
+   - Always include proper lang attribute in page language
+   - Close all tags properly (valid XHTML within APEX)
+
+b) APEX Integration:
+   - Use APEX page items (P<page>_<ITEM>) instead of raw form fields
+   - Leverage APEX theme system for consistent styling
+   - Use APEX item rendering instead of HTML input tags
+   - Bind form values to APEX session state (:P1_ITEM_NAME)
+   - Use APEX buttons/processes instead of HTML form submit
+
+c) Form Elements:
+   - Use APEX_ITEM or page item components for all input
+   - Required fields marked with APEX validation rules
+   - Form elements must be in APEX form container
+   - Use APEX autocomplete/LOV for dropdown lists
+   - Implement APEX field-level validation (required, pattern, range)
+
+d) Accessibility Requirements (WCAG 2.1 AA):
+   - Every form input must have associated <label> with for attribute
+   - Use aria-label or aria-labelledby for complex controls
+   - Include aria-required for mandatory fields
+   - Add aria-describedby for field help text
+   - Implement aria-live for error messages
+   - Ensure color not sole means of information (use icons/text)
+   - Maintain minimum 4.5:1 contrast ratio for text
+   - Include skip links for keyboard navigation
+
+e) Meta Tags:
+   - charset already provided by APEX (don't duplicate)
+   - viewport already set by APEX theme (don't duplicate)
+   - If custom meta needed, place in Page HTML Header attribute
+   - Never override APEX system meta tags
+
+f) Code Structure:
+   ✓ Well-indented (2 or 4 spaces, consistent)
+   ✓ ID attributes use kebab-case (id="form-section")
+   ✓ Class names use kebab-case (class="form-container")
+   ✓ Data attributes for custom data (data-item="P1_NAME")
+   ✗ No inline style attributes (use CSS classes instead)
+   ✗ No hardcoded values (use APEX variables/binds)
+   ✗ No onclick handlers (use APEX Dynamic Actions)
+
+g) Example - CORRECT:
+   ```html
+   <!-- Region HTML content only (no full document structure) -->
+   <div class="form-section" id="customer-form">
+       <h2>Customer Registration</h2>
+       <!-- APEX items rendered here by APEX, not raw HTML inputs -->
+       <!-- Use APEX buttons, not HTML buttons -->
+   </div>
+   ```
+
+h) Example - WRONG (Don't Do This):
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Form</title>
+   </head>
+   <body>
+       <!-- Multiple body tags cause DOM conflicts -->
+       <form method="post" action="">
+           <!-- Raw HTML form won't integrate with APEX -->
+       </form>
+   </body>
+   </html>
+   ```
+
+12. CSS STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) Location & Organization:
+   - Use external CSS files in Shared Components > Static Files
+   - Create separate files for different features (app-forms.css, app-tables.css)
+   - Do NOT embed <style> tags in HTML regions
+   - Do NOT use inline style attributes (style="...")
+   - CSS in Page CSS attribute only for page-specific rules
+
+b) Variables & Theming:
+   - Use CSS custom properties (variables) for colors
+   - Define variables at :root level
+   - Follow naming: --app-<context>-<property>
+   - Use APEX theme CSS classes when available (#t-Region, .t-Button, etc.)
+   - Never hardcode colors (always use variables/theme values)
+
+c) Responsive Design (Mobile-First):
+   - Use mobile-first approach (base styles first)
+   - Implement breakpoints: 480px, 768px, 1024px, 1440px
+   - Use max-width for containers (not 100vw/100vh)
+   - Ensure touch targets minimum 44x44 pixels
+   - Test on: mobile, tablet, desktop
+
+d) Accessibility Requirements:
+   - Define :focus and :focus-visible states for all interactive elements
+   - Minimum contrast ratio 4.5:1 (normal text), 3:1 (large text)
+   - Define :disabled states with reduced opacity
+   - Support @media (prefers-color-scheme: dark) for dark mode
+   - Support @media (prefers-contrast: more) for high contrast
+   - Support @media (prefers-reduced-motion: reduce) for animations
+
+e) Performance Guidelines:
+   - Minimize selectors (avoid deep nesting)
+   - Use classes instead of IDs for styling
+   - Leverage flexbox/grid instead of floats
+   - Use CSS variables to reduce repetition
+   - Keep CSS file size < 100KB (minified)
+   - Combine related CSS files when possible
+
+f) Naming Conventions:
+   - Kebab-case for class names (class-name)
+   - Semantic names describing purpose (not appearance)
+   - BEM methodology for complex components
+   ✓ .button-primary, .form-section, .region-header
+   ✗ .red-button, .big-text, .right-aligned
+
+g) Example - CORRECT:
+   ```css
+   :root {
+       --app-primary-color: #1c4e80;
+       --app-primary-dark: #173b5c;
+       --app-bg-light: #f3f6fa;
+       --app-text-color: #333;
+       --spacing-base: 10px;
+   }
+
+   .form-container {
+       background-color: var(--app-bg-light);
+       padding: var(--spacing-base);
+       max-width: 600px;
+   }
+
+   .form-container input:focus {
+       outline: none;
+       border-color: var(--app-primary-color);
+       box-shadow: 0 0 4px rgba(28, 78, 128, 0.3);
+   }
+
+   @media (max-width: 768px) {
+       .form-container { padding: calc(var(--spacing-base) / 2); }
+   }
+
+   @media (prefers-color-scheme: dark) {
+       :root {
+           --app-bg-light: #1a1a1a;
+           --app-text-color: #e0e0e0;
+       }
+   }
+   ```
+
+h) Example - WRONG (Don't Do This):
+   ```css
+   <style>
+       body { width: 100vw; height: 100vh; }
+       .form { width: 100%; }
+       input { style="background: #fff;" }
+       button:hover { background: #1c4e80; }
+       /* No focus state, no dark mode, no mobile breakpoints */
+   </style>
+   ```
+
+13. JAVASCRIPT STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) Framework & Approach:
+   - Use APEX JavaScript APIs (apex.*) not raw jQuery
+   - Use apex.ready() for page load operations
+   - Use apex.server.process() for AJAX calls
+   - Use Dynamic Actions instead of inline onclick handlers
+   - Use apex.item API for item manipulation
+
+b) Code Structure:
+   - Keep functions focused and modular
+   - Use IIFE (Immediately Invoked Function Expression) to avoid global scope
+   - Declare variables with const/let (never var)
+   - Use const by default, let only when reassignment needed
+   - Use template literals for string concatenation
+   - Use arrow functions for callbacks
+
+c) Naming Conventions:
+   - camelCase for variables and functions: myFunction(), myVariable
+   - UPPER_CASE for constants: CONST_VALUE
+   - Prefix: is/has/can for boolean functions: isValid(), hasError()
+   - Prefix: get/set for accessor functions: getValue(), setValue()
+
+d) Debugging & Logging:
+   - Use apex.debug.log() for logging (respects APEX debug level)
+   - Always use appropriate log levels: 'INFO', 'WARNING', 'ERROR'
+   - Console.log() only for development (remove before production)
+   - Include context in debug messages: 'Function XYZ: message'
+
+e) Error Handling:
+   - Always include try/catch blocks for critical operations
+   - Use specific error types (not generic Error)
+   - Log errors with full context using APEX_DEBUG
+   - Provide user-friendly error messages via apex.message
+   - Never expose technical errors to end users
+
+f) Performance Guidelines:
+   - Minimize DOM queries (cache jQuery selections)
+   - Debounce frequent events (scroll, resize, keyup)
+   - Use event delegation for dynamic elements
+   - Lazy-load heavy JavaScript features
+   - Keep JavaScript files < 50KB (minified)
+
+g) Accessibility Requirements:
+   - Don't disable keyboard navigation (Tab, Enter, Escape, Arrows)
+   - Don't hide focus indicators without replacing them
+   - Announce changes with aria-live regions
+   - Use aria-expanded for toggle controls
+   - Use aria-pressed for toggle buttons
+   - Implement keyboard shortcuts with proper documentation
+   - Test with keyboard only (no mouse)
+
+h) APEX Integration Best Practices:
+   - Use apex.item() to access page items
+   - Use apex.items API for bulk operations
+   - Use apex.page.fetch() for asynchronous page submit
+   - Use apex.server.process() for background processes
+   - Respect APEX page security and CSRF tokens
+   - Use apex.navigation for page redirection
+
+i) Example - CORRECT:
+   ```javascript
+   (function() {
+       'use strict';
+       
+       const APP = {
+           formElement: null,
+           
+           init: function() {
+               apex.debug.log('INFO', 'APP.init: Initializing application');
+               this.cacheDOM();
+               this.bindEvents();
+           },
+           
+           cacheDOM: function() {
+               this.formElement = document.getElementById('customer-form');
+           },
+           
+           bindEvents: function() {
+               if (this.formElement) {
+                   this.formElement.addEventListener('submit', 
+                       this.handleSubmit.bind(this));
+               }
+           },
+           
+           handleSubmit: function(event) {
+               event.preventDefault();
+               
+               try {
+                   const formData = {
+                       name: apex.item('P1_NAME').getValue(),
+                       email: apex.item('P1_EMAIL').getValue()
+                   };
+                   
+                   apex.debug.log('INFO', 
+                       'APP.handleSubmit: Submitting data: ' + JSON.stringify(formData));
+                   
+                   this.submitForm(formData);
+               } catch (error) {
+                   apex.debug.error('APP.handleSubmit: ' + error.message);
+                   apex.message.alert('An error occurred. Please try again.');
+               }
+           },
+           
+           submitForm: function(data) {
+               apex.server.process('SAVE_CUSTOMER', 
+                   { p_data: JSON.stringify(data) },
+                   {
+                       success: function(response) {
+                           apex.message.alert('Data saved successfully');
+                       },
+                       error: function(error) {
+                           apex.debug.error('submitForm error: ' + error);
+                           apex.message.alert('Failed to save data');
+                       }
+                   }
+               );
+           }
+       };
+       
+       // Initialize when APEX is ready
+       apex.ready(APP.init.bind(APP));
+   })();
+   ```
+
+j) Example - WRONG (Don't Do This):
+   ```javascript
+   <!-- Inline onclick handler -->
+   <button onclick="showAlert()">Click Me</button>
+   
+   <!-- Global scope pollution -->
+   var globalCounter = 0;
+   function showAlert() {
+       console.log('clicked'); // Wrong: console.log in production
+       alert("Welcome"); // Wrong: hardcoded alert
+       globalCounter++; // Wrong: global variables
+   }
+   
+   <!-- No error handling -->
+   const value = document.getElementById('P1_NAME').value; // Might be null
+   
+   <!-- No APEX integration -->
+   jQuery('#form').on('click', function() { // jQuery in APEX 5+
+       ... // Missing apex.ready, apex.debug, error handling
+   });
+   ```
+
+14. PL/SQL PROCESS STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) Process Naming Conventions:
+   - Format: PR_<PURPOSE>_<ACTION>
+   - Examples: PR_EMP_INSERT, PR_USER_VALIDATE, PR_DATA_FETCH
+   - Always use meaningful descriptive names
+   - Never use generic names like "Process", "PR_USER", "Do Something"
+
+b) Code Structure & Formatting:
+   - DECLARE section: One variable per line with type and optional comment
+   - BEGIN section: Statements properly indented (4 spaces)
+   - Exception handling: Required for all processes
+   - Comments: Explain complex logic
+   - Line length: Maximum 100 characters
+   Example format:
+   ```plsql
+   DECLARE
+       lc_emp_name    VARCHAR2(100);    -- Employee name
+       ln_emp_id      NUMBER;            -- Employee ID
+       ld_hire_date   DATE;              -- Hire date
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_EMP_INSERT');
+       
+       -- Fetch employee details
+       SELECT NAME INTO lc_emp_name FROM EMPLOYEES WHERE ID = :P1_EMP_ID;
+       
+       APEX_DEBUG.MESSAGE('Processing employee: ' || lc_emp_name);
+   EXCEPTION
+       WHEN NO_DATA_FOUND THEN
+           APEX_DEBUG.ERROR('Employee not found');
+           RAISE_APPLICATION_ERROR(-20001, 'Employee not found');
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+c) Variable Naming Standards:
+   - Prefix indicates type (required):
+     * lc_ for VARCHAR2/CHAR
+     * ln_ for NUMBER
+     * ld_ for DATE
+     * lb_ for BOOLEAN
+     * lo_ for OBJECT
+   - Use %TYPE anchor for table columns: emp.NAME%TYPE
+   - Use %ROWTYPE for full row: employees%ROWTYPE
+   - Never use: P_, V_, G_, global prefixes (APEX uses these)
+   Example:
+   ```plsql
+   DECLARE
+       lc_status          VARCHAR2(10);       -- ✓ Correct
+       ln_count           NUMBER;              -- ✓ Correct
+       ld_process_date    DATE;                -- ✓ Correct
+       P_STATUS           VARCHAR2(10);       -- ✗ Wrong (APEX reserved)
+       v_count            NUMBER;              -- ✗ Wrong (use ln_)
+   BEGIN
+   ```
+
+d) SQL Query Standards in PL/SQL:
+   - Use table aliases (E for employees, D for departments)
+   - Explicit column selection (never SELECT *)
+   - Use %TYPE for column references: employees.name%TYPE
+   - Use bind variables (:P1_ITEM) not string concatenation
+   - Use prepared statements when possible
+   Example:
+   ```plsql
+   -- ✓ CORRECT
+   SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME
+   INTO   ln_emp_id, lc_emp_name
+   FROM   EMPLOYEES E
+   WHERE  E.EMPLOYEE_ID = :P1_EMP_ID;
+   
+   -- ✗ WRONG (SELECT *, no alias, string concat)
+   SELECT * INTO lc_data FROM EMPLOYEES
+   WHERE EMPLOYEE_ID = p_id;
+   ```
+
+e) Error Handling Requirements:
+   - ALL processes must have exception handling
+   - Specific exceptions BEFORE generic WHEN OTHERS
+   - Always use APEX_DEBUG.ERROR() for logging
+   - Use RAISE_APPLICATION_ERROR() for user messages
+   - Never suppress exceptions silently
+   Example:
+   ```plsql
+   BEGIN
+       -- Process logic
+   EXCEPTION
+       WHEN NO_DATA_FOUND THEN
+           APEX_DEBUG.ERROR('No employee found for ID: ' || :P1_EMP_ID);
+           RAISE_APPLICATION_ERROR(-20001, 'Employee not found');
+       WHEN TOO_MANY_ROWS THEN
+           APEX_DEBUG.ERROR('Multiple employees with ID: ' || :P1_EMP_ID);
+           RAISE_APPLICATION_ERROR(-20002, 'Data integrity error');
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Unexpected error in PR_EMP_FETCH: ' || SQLERRM);
+           RAISE_APPLICATION_ERROR(-20099, 'System error: ' || SQLERRM);
+   END;
+   ```
+
+f) Debugging & Instrumentation:
+   - Use APEX_DEBUG.MESSAGE() for informational logging
+   - Use APEX_DEBUG.ERROR() for error logging
+   - Log at entry point: 'Start: PR_PROCESS_NAME'
+   - Log at exit point: 'End: PR_PROCESS_NAME'
+   - Log significant operations and values
+   - Never use DBMS_OUTPUT in production
+   Example:
+   ```plsql
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_EMP_INSERT');
+       
+       APEX_DEBUG.MESSAGE('Input - P1_EMP_NAME: ' || :P1_EMP_NAME);
+       APEX_DEBUG.MESSAGE('Input - P1_DEPT_ID: ' || :P1_DEPT_ID);
+       
+       -- Insert logic
+       INSERT INTO EMPLOYEES (NAME, DEPT_ID) VALUES (:P1_EMP_NAME, :P1_DEPT_ID);
+       
+       APEX_DEBUG.MESSAGE('Rows inserted: ' || SQL%ROWCOUNT);
+       APEX_DEBUG.MESSAGE('End: PR_EMP_INSERT - Success');
+   EXCEPTION
+       ...
+   END;
+   ```
+
+g) APEX Integration Best Practices:
+   - Use :P<page>_<item> syntax for binding page items
+   - Use apex.message.alert() or apex.message.success() for user feedback
+   - Commit/rollback handling:
+     * APEX processes auto-commit unless wrapped in transaction
+     * Use savepoints for complex operations
+     * Always be explicit about transaction handling
+   - Use apex.navigation for post-process navigation
+   Example:
+   ```plsql
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_SAVE_EMPLOYEE');
+       
+       -- Read from page items
+       IF :P1_EMP_NAME IS NULL THEN
+           RAISE_APPLICATION_ERROR(-20001, 'Employee name required');
+       END IF;
+       
+       -- Process data
+       INSERT INTO EMPLOYEES (NAME, SALARY) 
+       VALUES (:P1_EMP_NAME, :P1_SALARY);
+       
+       -- Set return item
+       :P1_EMP_ID := EMPLOYEES_SEQ.CURRVAL;
+       
+       -- Log success
+       APEX_DEBUG.MESSAGE('Employee saved with ID: ' || :P1_EMP_ID);
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error saving employee: ' || SQLERRM);
+           RAISE_APPLICATION_ERROR(-20099, SQLERRM);
+   END;
+   ```
+
+h) Process Performance Guidelines:
+   - Minimize round-trips to database
+   - Use bulk operations (FORALL, INSERT..SELECT) when possible
+   - Avoid nested loops with database queries
+   - Use efficient SQL (proper indexes, joins)
+   - Consider pagination for large result sets
+   - Profile slow processes using APEX_DEBUG
+
+i) Common Mistakes to Avoid:
+   ✗ No exception handling
+   ✗ Using generic variable names: v_data, v_temp, v_result
+   ✗ SELECT * without explicit columns
+   ✗ Missing WHERE clause (affects all rows)
+   ✗ String concatenation for SQL (security risk)
+   ✗ Hardcoded values (use parameters/page items)
+   ✗ Using DBMS_OUTPUT instead of APEX_DEBUG
+   ✗ Not validating input parameters
+   ✗ Silent failures (catching but not logging)
+   ✗ Mixing business logic with UI logic
+   ✗ Using reserved APEX prefixes (P_, V_, G_)
+   ✗ No commit/rollback strategy
+
+
+15. COMBINED HTML/CSS/JAVASCRIPT WORKFLOW
+--------------------------------------------------
+a) Planning Phase:
+   - Identify APEX components (items, buttons, regions, processes)
+   - Determine if custom HTML needed or APEX defaults sufficient
+   - Plan responsive design and accessibility requirements
+   - Design CSS architecture and organization
+
+b) Implementation Phase:
+   - Create APEX page items in designer (don't hardcode HTML)
+   - Create external CSS files in Shared Components
+   - Write JavaScript with APEX APIs
+   - Use Dynamic Actions for client-side logic
+   - Test accessibility with keyboard navigation
+
+c) Testing Phase:
+   - Validate HTML with W3C Validator (after rendering)
+   - CSS responsive testing at all breakpoints
+   - JavaScript console for errors (apex.debug.log)
+   - Accessibility testing: keyboard, screen reader, contrast
+   - Cross-browser testing (Chrome, Firefox, Safari, Edge)
+
+d) Integration Checklist:
+   ☑ HTML uses only region snippets (no full documents)
+   ☑ All form inputs are APEX items (not raw HTML)
+   ☑ CSS in external files with variables
+   ☑ JavaScript uses APEX APIs
+   ☑ All interactive elements keyboard accessible
+   ☑ WCAG 2.1 AA compliance verified
+   ☑ No console errors
+   ☑ Responsive design working
+   ☑ Error handling implemented
+   ☑ Documentation complete
+
+15. COMBINED HTML/CSS/JAVASCRIPT WORKFLOW
+--------------------------------------------------
+a) Planning Phase:
+   - Identify APEX components (items, buttons, regions, processes)
+   - Determine if custom HTML needed or APEX defaults sufficient
+   - Plan responsive design and accessibility requirements
+   - Design CSS architecture and organization
+
+b) Implementation Phase:
+   - Create APEX page items in designer (don't hardcode HTML)
+   - Create external CSS files in Shared Components
+   - Write JavaScript with APEX APIs
+   - Use Dynamic Actions for client-side logic
+   - Test accessibility with keyboard navigation
+
+c) Testing Phase:
+   - Validate HTML with W3C Validator (after rendering)
+   - CSS responsive testing at all breakpoints
+   - JavaScript console for errors (apex.debug.log)
+   - Accessibility testing: keyboard, screen reader, contrast
+   - Cross-browser testing (Chrome, Firefox, Safari, Edge)
+
+d) Integration Checklist:
+   ☑ HTML uses only region snippets (no full documents)
+   ☑ All form inputs are APEX items (not raw HTML)
+   ☑ CSS in external files with variables
+   ☑ JavaScript uses APEX APIs
+   ☑ All interactive elements keyboard accessible
+   ☑ WCAG 2.1 AA compliance verified
+   ☑ No console errors
+   ☑ Responsive design working
+   ☑ Error handling implemented
+   ☑ Documentation complete
+
+16. COMMON MISTAKES TO AVOID
+--------------------------------------------------
+HTML Mistakes:
+✗ Embedding <!DOCTYPE>, <html>, <head>, <body> tags
+✗ Using raw HTML form instead of APEX items
+✗ Hardcoding dropdown options (use LOV instead)
+✗ Missing aria-label and aria-labelledby
+✗ Using onclick handlers instead of Dynamic Actions
+✗ Duplicate meta tags already set by APEX
+
+CSS Mistakes:
+✗ Embedding <style> tags in HTML regions
+✗ Using inline style attributes
+✗ Hardcoding colors (no variables)
+✗ No mobile breakpoints (@media)
+✗ Missing :focus states
+✗ Using IDs for styling (use classes)
+✗ Styling body tag (affects entire page)
+✗ Using 100vw/100vh (causes overflow)
+
+JavaScript Mistakes:
+✗ Using console.log in production
+✗ Global variable declarations (use IIFE)
+✗ Using var instead of const/let
+✗ No error handling (try/catch)
+✗ Using jQuery selectors in APEX 5+
+✗ No apex.debug logging
+✗ Missing apex.ready() wrapper
+✗ Hardcoded values (use APEX items)
+✗ No keyboard event handling
+✗ Binding events on load instead of apex.ready()
+
+PL/SQL Process Mistakes:
+✗ No exception handling
+✗ Generic variable names (v_data, v_temp)
+✗ Using SELECT * without explicit columns
+✗ Missing WHERE clause (affects all rows)
+✗ String concatenation for SQL (security risk)
+✗ Hardcoded values (use parameters/page items)
+✗ Using DBMS_OUTPUT instead of APEX_DEBUG
+✗ Not validating input parameters
+✗ Silent failures (catching but not logging)
+✗ Mixing business logic with UI logic
+✗ Using reserved APEX prefixes (P_, V_, G_)
+✗ No commit/rollback strategy
+
+END OF STANDARDS DOCUMENT

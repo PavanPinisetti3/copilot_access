@@ -1,0 +1,244 @@
+---
+# ====== Page: CODE_REVIEW_FOR_HTML_CSS_JAVASCRIPT ===========
+id: 3
+identification: 
+  name: CODE_REVIEW_FOR_HTML_CSS_JAVASCRIPT
+  alias: CODE-REVIEW-FOR-HTML-CSS-JAVASCRIPT
+  title: CODE_REVIEW_FOR_HTML_CSS_JAVASCRIPT
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  execute-when-page-loads: |
+    // This code runs automatically when the page finishes loading
+    apex.jQuery(function($) {
+      console.log("Page loaded successfully!");
+    
+      // Example: Show an alert
+      apex.message.alert("Welcome to the page!");
+    
+      // Example: Set a default value for a page item
+      $s("P1_STATUS", "ACTIVE");
+    
+      // Example: Hide a region
+      $("#regionStaticID").hide();
+    
+      // Example: Add a background color to a field
+      $("#P1_NAME").css("background-color", "#f0f8ff");
+    });
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: New =========================================
+  id: 26585496977181440
+  identification: 
+    name: New
+    type: Static Content
+
+  source: 
+    html-code: |
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sample Form - SBI</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f6fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+          }
+      
+          .form-container {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100vw;
+          }
+      
+          h2 {
+            text-align: center;
+            color: #1c4e80; /* SBI Blue */
+          }
+      
+          label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+          }
+      
+          input[type="text"],
+          input[type="email"],
+          input[type="number"],
+          input[type="password"],
+          select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+          }
+      
+          button {
+            width: 100%;
+            margin-top: 20px;
+            background-color: #1c4e80;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+          }
+      
+          button:hover {
+            background-color: #173b5c;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="form-container">
+          <h2>SBI Customer Form</h2>
+          <form>
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      
+            <label for="email">Email ID</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      
+            <label for="account">Account Number</label>
+            <input type="number" id="account" name="account" placeholder="Enter account number" required>
+      
+            <label for="branch">Branch</label>
+            <select id="branch" name="branch" required>
+              <option value="">Select Branch</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Chennai">Chennai</option>
+            </select>
+      
+            <label for="password">Set Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+      
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </body>
+      </html>
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 49614904637905570
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 27649671033640399
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+

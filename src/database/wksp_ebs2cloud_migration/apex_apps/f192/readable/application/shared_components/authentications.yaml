@@ -1,0 +1,54 @@
+---
+- # ====== Authentication: Custom_authentication ===============
+  id: 101334481021719539
+  identification: 
+    name: Custom_authentication
+
+  subscription: 
+    version-number: 12212723955666
+
+  settings: 
+    type: Custom
+    enable-legacy-authentication-attributes: false
+
+  source: 
+    pl/sql-code: |
+      function auth(p_username  varchar2,p_password  varchar2)  return boolean as
+      user_found number := 0;
+      begin
+      select 1 into user_found from 
+      USER_MANAGEMENT where upper(USER_NAME) = upper(p_username) ;
+      return true;
+      exception when no_data_found then
+      return false;
+      end auth;
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: true
+
+  real-application-security: 
+    ras-mode: Disabled
+
+- # ====== Authentication: Oracle APEX Accounts ================
+  id: 219353099488126967
+  identification: 
+    name: Oracle APEX Accounts
+
+  subscription: 
+    version-number: 1
+
+  settings: 
+    type: Oracle APEX Accounts
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+

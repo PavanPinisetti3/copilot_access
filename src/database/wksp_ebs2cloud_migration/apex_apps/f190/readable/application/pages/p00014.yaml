@@ -1,0 +1,197 @@
+---
+# ====== Page: P_CSV_Test ====================================
+id: 14
+identification: 
+  name: P_CSV_Test
+  title: CSV TEST
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: R_Dowload_Region ============================
+  id: 52545292012575920
+  identification: 
+    name: R_Dowload_Region
+    title: Dowload Region
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 54942777626722866
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 196324898409373257
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Commented Out # 196324354388373242
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+buttons: 
+- # ====== Button: B_Download_Zip ==============================
+  id: 52545029419575917
+  identification: 
+    button-name: B_Download_Zip
+    label: Download Zip
+
+  layout: 
+    sequence: 10
+    region: R_Dowload_Region # 52545292012575920
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+processes: 
+- # ====== Process: PR_DOWNLOAD_ZIP_PROCESS ====================
+  id: 52545353944575921
+  identification: 
+    name: PR_DOWNLOAD_ZIP_PROCESS
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      declare
+      l_clob clob;
+      l_blob blob;
+      l_base64_content CLOB;
+      BEGIN
+              select col4 into l_blob from XXCUSTOM_TEMP where rownum=3;
+              -- dbms_lob.createtemporary(l_base64_content, TRUE);
+              -- l_base64_content := apex_web_service.blob2clobbase64(l_blob);
+              -- dbms_lob.freetemporary(l_base64_content);
+               sys.HTP.init;
+        sys.OWA_UTIL.mime_header('application/zip', FALSE);
+        sys.HTP.p('Content-Length: ' || DBMS_LOB.getlength(l_blob));
+        sys.HTP.p('Content-Disposition: filename="doc.zip"');
+        sys.OWA_UTIL.http_header_close;
+       
+        sys.WPG_DOCLOAD.download_file(l_blob);
+        apex_application.stop_apex_engine;
+       
+      end;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: B_Download_Zip # 52545029419575917
+

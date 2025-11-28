@@ -1,0 +1,357 @@
+---
+# ====== Page: P_Login_Page ==================================
+id: 6
+identification: 
+  name: P_Login_Page
+  alias: LOGIN-PAGE
+  title: Login_Page
+
+appearance: 
+  page-mode: Normal
+  page-template: Login
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: R_Login =====================================
+  id: 78278002223460779
+  identification: 
+    name: R_Login
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Login
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 78301534807904146
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 196324898409373257
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Commented Out # 196324354388373242
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: I6_USER_NAME =============================
+  id: 78278101214460780
+  identification: 
+    name: I6_USER_NAME
+    type: Text Field
+
+  label: 
+    label: USERNAME
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: R_Login # 78278002223460779
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I6_PASSWORD ==============================
+  id: 78278184887460781
+  identification: 
+    name: I6_PASSWORD
+    type: Password
+
+  label: 
+    label: PASSWORD
+    alignment: Left
+
+  settings: 
+    submit-when-enter-pressed: true
+
+  layout: 
+    sequence: 20
+    region: R_Login # 78278002223460779
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: B_LOGIN =====================================
+  id: 78278317890460782
+  identification: 
+    button-name: B_LOGIN
+    label: Login
+
+  layout: 
+    sequence: 30
+    region: R_Login # 78278002223460779
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+validations: 
+- # ====== Validation: User Name ===============================
+  id: 78278596918460785
+  identification: 
+    name: User Name
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Function Body (returning Error Text)
+    language: PL/SQL
+    pl/sql-function-body-returning-error-text: |
+      DECLARE
+        user_found number:=0;
+      BEGIN
+        select count(1) into user_found  from USER_MANAGEMENT where upper(USER_NAME)=upper(:I6_USER_NAME);
+        if user_found = 0 then
+        return 'user not found';
+        end if;
+        end;
+    always-execute: false
+
+  error: 
+    display-location: Inline with Field and in Notification
+    associated-item: I6_USER_NAME # 78278101214460780
+
+  server-side-condition: 
+    when-button-pressed: B_LOGIN # 78278317890460782
+
+- # ====== Validation: Password ================================
+  id: 78278677392460786
+  identification: 
+    name: Password
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Function Body (returning Error Text)
+    language: PL/SQL
+    pl/sql-function-body-returning-error-text: |
+      DECLARE
+        user_found number:=0;
+      BEGIN
+        select count(1) into user_found  from USER_MANAGEMENT where   UPPER(PASSWORD) =UPPER(:I6_PASSWORD);
+        if user_found = 0 then
+        return ' password incorrect';
+        end if;
+        end;
+    always-execute: false
+
+  error: 
+    display-location: Inline with Field and in Notification
+    associated-item: I6_PASSWORD # 78278184887460781
+
+  server-side-condition: 
+    when-button-pressed: B_LOGIN # 78278317890460782
+
+processes: 
+- # ====== Process: PR_Validating and moving to next page ======
+  id: 78278750211460787
+  identification: 
+    name: PR_Validating and moving to next page
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        user_found number:=0;
+      BEGIN
+       
+        select count(1) into user_found  from USER_MANAGEMENT where upper(USER_NAME)=upper(:I6_USER_NAME) and PASSWORD =:I6_PASSWORD;
+        if user_found = 1 then
+         wwv_flow_custom_auth_std.post_login(:I6_USER_NAME,
+                                              :I6_PASSWORD,
+                                              :APP_SESSION,
+                                              :APP_ID||':1');
+      
+       
+        end if;
+        end;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: B_LOGIN # 78278317890460782
+

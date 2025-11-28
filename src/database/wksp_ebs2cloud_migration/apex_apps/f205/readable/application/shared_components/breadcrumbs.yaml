@@ -1,0 +1,49 @@
+---
+- # ====== Breadcrumb: Breadcrumb ==============================
+  id: 27649671033640399
+  identification: 
+    name: Breadcrumb
+
+  entries: 
+  - # ====== Entry: Home =========================================
+    id: 27649892327640400
+    identification: 
+      name: Home
+      page-number: 1
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
+        page: 1 # Home
+
+  - # ====== Entry: DEMO_PAGE ====================================
+    id: 37331237959020222
+    identification: 
+      name: DEMO_PAGE
+      page-number: 2
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # CODE_REVIEW_FOR_PAGE_PROCESS_AND_REPORT_QUERY
+
+  - # ====== Entry: CODE_REVIEW_FOR_HTML_CSS_JAVASCRIPT ==========
+    id: 49615411593905556
+    identification: 
+      name: CODE_REVIEW_FOR_HTML_CSS_JAVASCRIPT
+      page-number: 3
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # CODE_REVIEW_FOR_HTML_CSS_JAVASCRIPT
+

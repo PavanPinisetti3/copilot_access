@@ -1,0 +1,16 @@
+.t-Form-label{
+    font-size: small;
+}
+.t-button{
+    size: 10px;
+}
+.t-Region{
+    border-top: none;
+    border-left: none;
+    border-right:none;
+    border-bottom:none;
+    margin-top: none;
+    margin-bottom: none;
+    margin-left: none;
+    margin-right:none;
+}

@@ -1,0 +1,34 @@
+---
+- # ====== Role: Admin =========================================
+  id: 25857742350089008
+  identification: 
+    name: Admin
+
+  advanced: 
+    static-id: ADMIN
+
+  subscription: 
+    version-number: 12212737018118
+
+- # ====== Role: BA Consultant =================================
+  id: 25857814149090616
+  identification: 
+    name: BA Consultant
+
+  advanced: 
+    static-id: BA_CONSULTANT
+
+  subscription: 
+    version-number: 12212737018210
+
+- # ====== Role: DM Consultant =================================
+  id: 25857932466091541
+  identification: 
+    name: DM Consultant
+
+  advanced: 
+    static-id: DM_CONSULTANT
+
+  subscription: 
+    version-number: 12212737018251
+

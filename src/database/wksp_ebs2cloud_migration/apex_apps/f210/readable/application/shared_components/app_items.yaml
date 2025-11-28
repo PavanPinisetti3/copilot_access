@@ -1,0 +1,40 @@
+---
+- # ====== Application Item: EBS_RESP_ID =======================
+  id: 54823980253722233
+  identification: 
+    name: EBS_RESP_ID
+    scope: Application
+
+  security: 
+    session-state-protection: Unrestricted
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 12204940552353
+
+- # ====== Application Item: EBS_APP_ID ========================
+  id: 54824228780724002
+  identification: 
+    name: EBS_APP_ID
+    scope: Application
+
+  security: 
+    session-state-protection: Unrestricted
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 12204940552353
+
+- # ====== Application Item: EBS_SEC_GROUP =====================
+  id: 54824391001725214
+  identification: 
+    name: EBS_SEC_GROUP
+    scope: Application
+
+  security: 
+    session-state-protection: Unrestricted
+    escape-special-characters: true
+
+  subscription: 
+    version-number: 12204940552353
+

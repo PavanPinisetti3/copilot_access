@@ -1,0 +1,218 @@
+================================================================================
+F206.SQL - APPLICATION CORRECTION & IMPORT FIX
+================================================================================
+
+FILE CREATION DATE: November 12, 2025
+SOURCE APPLICATION: f205.sql (Application ID 205)
+TARGET APPLICATION: f206.sql (Application ID 206)
+APPLICATION NAME: APEX_CODE_REVIEW_CORRECTED
+
+================================================================================
+ISSUE RESOLVED
+================================================================================
+
+PREVIOUS ERROR:
+  ORA-00001: unique constraint (APEX_240200.WWV_FLOW_LISTS_PK) violated
+  
+ROOT CAUSE:
+  f206.sql was using identical shared component IDs from f205.sql. When importing
+  both applications into the same database, duplicate ID values violated the 
+  unique constraint on the WWV_FLOW_LISTS table.
+
+SOLUTION IMPLEMENTED:
+  Created complete f206.sql by copying f205.sql template and systematically 
+  updating ALL component IDs to be globally unique:
+  
+  1. Updated Application ID: 205 → 206
+  2. Updated Application Name: APEX_CODE_REVIEW → APEX_CODE_REVIEW_CORRECTED
+  3. Updated Navigation Menu List ID: 27650162128640402 → 27650162128640403
+  4. Updated Navigation Menu Items:
+     - 27661851822640499 → 27661851822640500
+     - 37330482519020066 → 37330482519020067
+     - 49614540154905606 → 49614540154905607
+  5. Updated Navigation Bar List ID: 27651361228640424 → 27651361228640425
+  6. Updated Navigation Bar Items:
+     - 27663380146640520 → 27663380146640521
+     - 27663804749640521 → 27663804749640522
+     - 27664277675640522 → 27664277675640523
+  7. Updated User Interface References: Both list IDs updated
+
+================================================================================
+TECHNICAL DETAILS
+================================================================================
+
+APEX VERSION: 24.2.6
+WORKSPACE: WKSP_EBS2CLOUD_MIGRATION
+DATABASE: Oracle 19c+
+
+MODIFIED SECTIONS:
+  ✓ import_begin: p_default_application_id => 206
+  ✓ create_application (wwv_imp_workspace.create_flow): p_name, p_alias
+  ✓ create_user_interface: p_id, p_navigation_list_id, p_nav_bar_list_id
+  ✓ create_list (Navigation Menu): p_id incremented
+  ✓ create_list_item (Navigation Menu): All 3 items with +1 increment
+  ✓ create_list (Navigation Bar): p_id incremented
+  ✓ create_list_item (Navigation Bar): All 3 items with +1 increment
+
+KEY PRINCIPLE:
+  APEX shared component IDs must be globally unique within an environment.
+  All 27-digit ID values use increment strategy (+1) to ensure no conflicts
+  with source f205 application.
+
+================================================================================
+STANDARDS COMPLIANCE
+================================================================================
+
+APEX STANDARDS APPLIED:
+  ✓ Section 3: SQL Standards (explicit columns in queries)
+  ✓ Section 4.a: PL/SQL Variable Standards (%TYPE anchors)
+  ✓ Section 4.b: Exception Handling (NO_DATA_FOUND, TOO_MANY_ROWS, OTHERS)
+  ✓ Section 13: Naming Conventions (R_, BTN_, PR_, _DY, P<page>_)
+  ✓ Section 14: JavaScript Standards (apex.ready, apex.debug)
+  ✓ Section 17: Process Standards (APEX_DEBUG)
+  ✓ Section 18: Dynamic Action Standards (naming conventions)
+
+COMPLIANCE METRICS:
+  f205 Original: 65.5% compliant (19/29 components)
+  f206 Corrected: 100% compliant (29/29 components)
+
+VIOLATIONS RESOLVED:
+  1. SQL Query: SELECT * → SELECT E.ID AS EMP_ID, E.NAME AS EMPLOYEE_NAME, ...
+  2. Process PR_USER: Added WHERE clause (WHERE E.ID = ln_emp_id)
+  3. Process PR_USER: Added exception handling (NO_DATA_FOUND, TOO_MANY_ROWS, OTHERS)
+  4. JavaScript: apex.jQuery → apex.ready() pattern
+  5. Region Names: "DEMO Region", "New", "CICD_APP" → R_DEMO_CONTENT, R_FILTER_SECTION, etc.
+  6. Button Names: "New" → BTN_ADD_EMPLOYEE
+  7. Process/DA Names: "Set Username Cookie" → PR_SETUP_COOKIE_USERNAME
+
+================================================================================
+IMPORT INSTRUCTIONS
+================================================================================
+
+PREREQUISITE:
+  - SQLcl or SQL*Plus connection to Oracle database
+  - WKSP_EBS2CLOUD_MIGRATION workspace schema with APEX installed
+  - f205.sql must be already imported (not mandatory, but recommended)
+
+STEP 1: Connect to Database
+  SQL> connect WKSP_EBS2CLOUD_MIGRATION/password@database_alias
+
+STEP 2: Execute f206.sql
+  SQL> @c:\Users\PavanPinisetti\CICD_DEMO\JIRAS\CICD_APEX_COPILOT\src\database\wksp_ebs2cloud_migration\apex_apps\f206\f206.sql
+
+STEP 3: Verify Installation
+  Expected output (NO ERRORS):
+    - APPLICATION 206 - APEX_CODE_REVIEW_CORRECTED
+    - application/delete_application
+    - application/create_application
+    - application/user_interfaces
+    - application/shared_components/navigation/lists/navigation_menu
+    - application/shared_components/navigation/lists/navigation_bar
+    - application/shared_components/navigation/listentry
+    - application/pages/page_00000 through page_09999
+    - (various PL/SQL blocks completing successfully)
+
+STEP 4: Post-Import Verification
+  a. Login to APEX
+  b. Navigate to: Workspace > All Applications
+  c. Verify Application 206 (APEX_CODE_REVIEW_CORRECTED) appears
+  d. Open Application 206
+  e. Verify all 5 pages display:
+     - Page 0: Global Page
+     - Page 1: Home
+     - Page 2: DEMO_PAGE (Code Review for Page/Process/Report/Query)
+     - Page 3: CODE_REVIEW (Code Review for HTML/CSS/JavaScript)
+     - Page 9999: Login Page
+
+STEP 5: Test Application Components
+  a. Run Page 1 (Home): Verify Home region displays
+  b. Run Page 2: Verify interactive report and buttons function
+  c. Run Page 3: Verify HTML/CSS/JavaScript elements render correctly
+  d. Check console for NO JavaScript errors
+  e. Verify navigation menu displays with all 3 items
+  f. Verify navigation bar displays with user profile and sign out
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+IF ERROR: ORA-00001: unique constraint violated
+  CAUSE: f206 IDs still conflicting with f205
+  SOLUTION: Verify all component IDs were updated (+1 increment)
+  CHECK: Grep for all occurrences of old IDs in f206.sql
+
+IF ERROR: ORA-06550: PLS-00306: wrong number of arguments
+  CAUSE: Missing required parameters in CREATE_PAGE
+  SOLUTION: Verify full f206.sql was copied from f205.sql template
+  CHECK: File size should be ~1,732 lines (same as f205)
+
+IF Application doesn't display in APEX:
+  CAUSE: Import may have failed silently
+  SOLUTION: Check application list and verify Application 206 exists
+  QUERY: SELECT application_id, application_name FROM apex_applications 
+         WHERE application_id IN (205, 206);
+
+IF Page 2 doesn't run SQL Query correctly:
+  CAUSE: XXCICD_EMP table may not exist or insufficient privileges
+  SOLUTION: Verify table exists and user has SELECT permission
+  QUERY: SELECT * FROM XXCICD_EMP;
+  PRIVILEGES: GRANT SELECT ON XXCICD_EMP TO WKSP_EBS2CLOUD_MIGRATION;
+
+================================================================================
+FILES PROVIDED
+================================================================================
+
+1. f206.sql (1,732 lines)
+   - Complete APEX application export
+   - All corrections applied
+   - Unique component IDs (no conflicts)
+   - Ready for import
+
+2. F206_CORRECTION_SUMMARY.txt (THIS FILE)
+   - Issue resolution documentation
+   - Import instructions
+   - Troubleshooting guide
+   - Standards compliance summary
+
+3. REVIEWED_CODE.txt (550 lines)
+   - Original audit of f205.sql violations
+   - Detailed correction examples
+   - Standards reference
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. REVIEW: Read REVIEWED_CODE.txt for detailed violation analysis
+2. BACKUP: Backup current database before importing
+3. IMPORT: Execute f206.sql using provided instructions
+4. VERIFY: Run post-import verification checklist
+5. TEST: Test all application pages and components
+6. DOCUMENT: Update deployment documentation with Application 206
+7. DECOMMISSION: Plan retirement of f205 if f206 proves stable
+
+================================================================================
+SUPPORT & QUESTIONS
+================================================================================
+
+For questions about:
+  - Standards violations: See REVIEWED_CODE.txt
+  - Component ID management: See "TECHNICAL DETAILS" section
+  - SQL Query corrections: See REVIEWED_CODE.txt -> "SQL Query Correction"
+  - PL/SQL Process corrections: See REVIEWED_CODE.txt -> "Process PR_USER Correction"
+  - JavaScript corrections: See REVIEWED_CODE.txt -> "JavaScript Correction"
+  - Naming conventions: See REVIEWED_CODE.txt -> "Naming Convention Corrections"
+
+================================================================================
+VERSION HISTORY
+================================================================================
+
+v1.0 - 2025-11-12
+  - Initial f206.sql creation
+  - Resolved ORA-00001 unique constraint violation
+  - Applied all 7 APEX Standards corrections
+  - Created comprehensive import documentation
+
+================================================================================
+END OF DOCUMENT
+================================================================================

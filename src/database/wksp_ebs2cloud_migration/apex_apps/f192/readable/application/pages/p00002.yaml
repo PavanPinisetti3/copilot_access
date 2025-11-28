@@ -1,0 +1,2904 @@
+---
+# ====== Page: Preview =======================================
+id: 2
+identification: 
+  name: Preview
+  alias: PREVIEW
+  title: Preview
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    .t-Report-colHead{
+        font-size: 15px !important; 
+        font-weight: bold !important;
+        white-space: nowrap;
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: R_FILTER ====================================
+  id: 77429502238148830
+  identification: 
+    name: R_FILTER
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: FILTER_DATA
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: DA_Cancel_button # 77431078750148846
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 77429620464148831
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: true
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: true
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Reset Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 77448007598162599
+      identification: 
+        name: Primary Report
+        alias: 188095
+
+  columns: 
+  - # ====== Column: EBS_TABLE_NAME ==============================
+    id: 77429639118148832
+    identification: 
+      column-name: EBS_TABLE_NAME
+      type: Popup LOV
+
+    heading: 
+      heading: Ebs Table Name
+      alignment: start
+
+    settings: 
+      display-as: Inline Popup
+      initial-fetch: Automatic
+      manual-entry: false
+      fetch-on-search: false
+
+    search: 
+      match-type: Contains
+      case-sensitive: false
+      minimum-characters: 0
+
+    multiple-values: 
+      type: No
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 200
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select distinct EBS_TABLE_NAME a, EBS_TABLE_NAME b from XXMIG_CUSTOM_MAPPING
+        where FBDI_IDENTIFIER = :I2_FBDI_IDENTIFIER 
+        
+      display-extra-values: true
+      display-null-value: true
+
+    cascading-list-of-values: 
+      parent-column(s): 
+      - FBDI_IDENTIFIER
+      items-to-submit: 
+      - EBS_TABLE_NAME
+      parent-required: true
+
+    source: 
+      type: Database Column
+      database-column: EBS_TABLE_NAME
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      hide: true
+
+  - # ====== Column: EBS_COLUMN_NAME =============================
+    id: 77429773571148833
+    identification: 
+      column-name: EBS_COLUMN_NAME
+      type: Popup LOV
+
+    heading: 
+      heading: Ebs Column Name
+      alignment: start
+
+    settings: 
+      display-as: Inline Popup
+      initial-fetch: Automatic
+      manual-entry: false
+      fetch-on-search: false
+
+    search: 
+      match-type: Contains
+      case-sensitive: false
+      minimum-characters: 0
+
+    multiple-values: 
+      type: No
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 50
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select EBS_COLUMN_NAME D, EBS_COLUMN_NAME R FROM XXMIG_CUSTOM_MAPPING
+        WHERE  EBS_TABLE_NAME= :EBS_TABLE_NAME
+        and fbdi_identifier = :I2_FBDI_IDENTIFIER 
+        
+      display-extra-values: false
+      display-null-value: true
+
+    cascading-list-of-values: 
+      parent-column(s): 
+      - EBS_TABLE_NAME
+      - FBDI_IDENTIFIER
+      items-to-submit: 
+      - EBS_COLUMN_NAME
+      parent-required: true
+
+    source: 
+      type: Database Column
+      database-column: EBS_COLUMN_NAME
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      hide: true
+
+  - # ====== Column: OPERATORS ===================================
+    id: 77429826112148834
+    identification: 
+      column-name: OPERATORS
+      type: Popup LOV
+
+    heading: 
+      heading: Operators
+      alignment: start
+
+    settings: 
+      display-as: Inline Popup
+      initial-fetch: Automatic
+      manual-entry: false
+      fetch-on-search: false
+
+    search: 
+      match-type: Contains
+      case-sensitive: false
+      minimum-characters: 0
+
+    multiple-values: 
+      type: No
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 50
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:=;=,!=;!=,LIKE;LIKE,<;<,>;>,is null;IS NULL,is not null;IS NOT NULL'
+      display-extra-values: true
+      display-null-value: true
+
+    source: 
+      type: Database Column
+      database-column: OPERATORS
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: FILTER_VALUE ================================
+    id: 77430023861148835
+    identification: 
+      column-name: FILTER_VALUE
+      type: Text Field
+
+    heading: 
+      heading: Filter Value
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 200
+
+    source: 
+      type: Database Column
+      database-column: FILTER_VALUE
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: Static
+      static-value: '&FILTER_VALUE.'
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: FBDI_IDENTIFIER =============================
+    id: 77430052465148836
+    identification: 
+      column-name: FBDI_IDENTIFIER
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 70
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: FBDI_IDENTIFIER
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+  - # ====== Column: FILTER_ID ===================================
+    id: 77430166225148837
+    identification: 
+      column-name: FILTER_ID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 80
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: FILTER_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: true
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 77430232195148838
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 77430357339148839
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: DA_Cancel_button ============================
+  id: 77431078750148846
+  identification: 
+    name: DA_Cancel_button
+    title: Filter
+    type: Static Content
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - t-DialogRegion--noPadding
+    - js-dialog-size720x480
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  configuration: 
+    build-option: Commented Out # 219352748727126957
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: R_PREVIEW ===================================
+  id: 93213129401796591
+  identification: 
+    name: R_PREVIEW
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Function Body returning SQL Query
+    language: PL/SQL
+    pl/sql-function-body-returning-sql-query: |
+      DECLARE
+          l_query        VARCHAR2(4000); 
+          l_column_names VARCHAR2(4000);
+          l_table_names  VARCHAR2(4000);
+          l_where        VARCHAR2(4000) := '';
+          l_where_clause VARCHAR2(4000) := '';
+      
+      BEGIN
+      
+          SELECT  
+              LISTAGG(DISTINCT ebs_table_name || '@apps_ebs ' || XX_ERP_INT_UTIL_PKG.generate_alias_name(ebs_table_name), ','),
+              LISTAGG(XX_ERP_INT_UTIL_PKG.generate_alias_name(ebs_table_name) || '.' || ebs_column_name, ',') 
+             
+          INTO 
+              l_table_names,
+              l_column_names
+          FROM 
+              xxmig_custom_mapping
+          WHERE 
+              ebs_table_name IS NOT NULL
+              AND ebs_column_name IS NOT NULL
+              AND fbdi_identifier = :I2_FBDI_IDENTIFIER;
+      
+             FOR i IN (
+              SELECT * FROM xxmig_custom_mapping
+              WHERE MAPPING_TABLE IS NOT NULL 
+                AND MAPPING_COLUMN IS NOT NULL 
+                AND fbdi_identifier = :I2_FBDI_IDENTIFIER
+          )
+          LOOP
+              l_where := l_where || ' AND ' || 
+                         XX_ERP_INT_UTIL_PKG.generate_alias_name(i.EBS_TABLE_NAME) || '.' || i.ebs_column_name || 
+                         ' = ' || 
+                         XX_ERP_INT_UTIL_PKG.generate_alias_name(i.MAPPING_TABLE) || '.' || i.MAPPING_COLUMN;
+                         --|| ' AND ' ||XX_ERP_INT_UTIL_PKG.generate_alias_name(i.EBS_TABLE_NAME) || '.'|| i.ebs_column_name ||' '|| i.filter_condition || ' ' || i.attribute_value;
+          END LOOP;
+      
+      
+        
+          FOR rec IN (
+              SELECT EBS_TABLE_NAME, EBS_COLUMN_NAME, filter_condition,attribute_value
+              FROM xxmig_custom_mapping  
+              WHERE attribute_type is not null
+          )
+          LOOP
+          IF upper(REC.filter_condition) = upper('LIKE') THEN
+          l_where_clause := l_where_clause || 
+                                        ' AND LOWER(' || XX_ERP_INT_UTIL_PKG.generate_alias_name(rec.EBS_TABLE_NAME) || '.' || rec.EBS_COLUMN_NAME || ')' || 
+                                        ' ' || rec.filter_condition ||
+                                        ' ''%' || LOWER(TRIM(rec.attribute_value)) || '%''';--' '||'||'%'||LOWER(''' || TRIM(rec.FILTER_VALUE) || ''')||'%'||'||;
+          ELSIF upper(rec.filter_condition) = upper('NULL') THEN
+                  l_where_clause := l_where_clause || 
+                                    ' AND ' || XX_ERP_INT_UTIL_PKG.generate_alias_name(rec.EBS_TABLE_NAME) || '.' || rec.EBS_COLUMN_NAME || ' IS NULL';
+              
+              ELSIF upper(rec.filter_condition) = upper('NOT NULL') THEN
+                  l_where_clause := l_where_clause || 
+                                    ' AND ' || XX_ERP_INT_UTIL_PKG.generate_alias_name(rec.EBS_TABLE_NAME) || '.' || rec.EBS_COLUMN_NAME || ' IS NOT NULL';
+                                        
+          ELSE
+      
+         l_where_clause := l_where_clause || 
+                                        ' AND LOWER(' || XX_ERP_INT_UTIL_PKG.generate_alias_name(rec.EBS_TABLE_NAME) || '.' || rec.EBS_COLUMN_NAME || ')' || 
+                                        ' ' || rec.filter_condition || 
+                                        ' LOWER(''' || TRIM(rec.attribute_value) || ''')';
+            END IF;
+          END LOOP;
+      
+         
+          
+          -- DBMS_OUTPUT.PUT_LINE('Generated WHERE Clause: ' || l_where_clause);
+      
+          l_query := 'SELECT ' || LOWER(l_column_names) || 
+                     ' FROM ' || LOWER(l_table_names) || 
+                     ' WHERE 1=1 ' || LOWER(l_where) || LOWER(l_where_clause) || 
+                     ' AND ROWNUM < 500';
+      
+         
+          -- DBMS_OUTPUT.PUT_LINE('Generated Query: ' || l_query);
+      
+          return(l_query);
+      
+      END;
+    page-items-to-submit: 
+    - I2_FBDI_IDENTIFIER
+    use-generic-column-names: true
+    generic-column-count: 50
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--accent15
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: your_classic_report_static_id
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 10
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Left
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Column Names (InitCap)
+
+    download: 
+      csv-export-enabled: true
+      link-text: Download
+      filename: '&I2_FBDI_IDENTIFIER.Preview'
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: COL01 =======================================
+    id: 93248797563999683
+    identification: 
+      column-name: COL01
+      type: Plain Text
+
+    heading: 
+      heading: Col01
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL02 =======================================
+    id: 93248965702999684
+    identification: 
+      column-name: COL02
+      type: Plain Text
+
+    heading: 
+      heading: Col02
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL03 =======================================
+    id: 93249070583999685
+    identification: 
+      column-name: COL03
+      type: Plain Text
+
+    heading: 
+      heading: Col03
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL04 =======================================
+    id: 93249156305999686
+    identification: 
+      column-name: COL04
+      type: Plain Text
+
+    heading: 
+      heading: Col04
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL05 =======================================
+    id: 93249199008999687
+    identification: 
+      column-name: COL05
+      type: Plain Text
+
+    heading: 
+      heading: Col05
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL06 =======================================
+    id: 93249345462999688
+    identification: 
+      column-name: COL06
+      type: Plain Text
+
+    heading: 
+      heading: Col06
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL07 =======================================
+    id: 93249459389999689
+    identification: 
+      column-name: COL07
+      type: Plain Text
+
+    heading: 
+      heading: Col07
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL08 =======================================
+    id: 93249505380999690
+    identification: 
+      column-name: COL08
+      type: Plain Text
+
+    heading: 
+      heading: Col08
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL09 =======================================
+    id: 93249683161999691
+    identification: 
+      column-name: COL09
+      type: Plain Text
+
+    heading: 
+      heading: Col09
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL10 =======================================
+    id: 93249752817999692
+    identification: 
+      column-name: COL10
+      type: Plain Text
+
+    heading: 
+      heading: Col10
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL11 =======================================
+    id: 93249870642999693
+    identification: 
+      column-name: COL11
+      type: Plain Text
+
+    heading: 
+      heading: Col11
+      alignment: start
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL12 =======================================
+    id: 93249974614999694
+    identification: 
+      column-name: COL12
+      type: Plain Text
+
+    heading: 
+      heading: Col12
+      alignment: start
+
+    layout: 
+      sequence: 120
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL13 =======================================
+    id: 93250083452999695
+    identification: 
+      column-name: COL13
+      type: Plain Text
+
+    heading: 
+      heading: Col13
+      alignment: start
+
+    layout: 
+      sequence: 130
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL14 =======================================
+    id: 93250122664999696
+    identification: 
+      column-name: COL14
+      type: Plain Text
+
+    heading: 
+      heading: Col14
+      alignment: start
+
+    layout: 
+      sequence: 140
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL15 =======================================
+    id: 93250285030999697
+    identification: 
+      column-name: COL15
+      type: Plain Text
+
+    heading: 
+      heading: Col15
+      alignment: start
+
+    layout: 
+      sequence: 150
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL16 =======================================
+    id: 93250353244999698
+    identification: 
+      column-name: COL16
+      type: Plain Text
+
+    heading: 
+      heading: Col16
+      alignment: start
+
+    layout: 
+      sequence: 160
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL17 =======================================
+    id: 93250404275999699
+    identification: 
+      column-name: COL17
+      type: Plain Text
+
+    heading: 
+      heading: Col17
+      alignment: start
+
+    layout: 
+      sequence: 170
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL18 =======================================
+    id: 93250572363999700
+    identification: 
+      column-name: COL18
+      type: Plain Text
+
+    heading: 
+      heading: Col18
+      alignment: start
+
+    layout: 
+      sequence: 180
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL19 =======================================
+    id: 93250650204999701
+    identification: 
+      column-name: COL19
+      type: Plain Text
+
+    heading: 
+      heading: Col19
+      alignment: start
+
+    layout: 
+      sequence: 190
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL20 =======================================
+    id: 93250753409999702
+    identification: 
+      column-name: COL20
+      type: Plain Text
+
+    heading: 
+      heading: Col20
+      alignment: start
+
+    layout: 
+      sequence: 200
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL21 =======================================
+    id: 93250885634999703
+    identification: 
+      column-name: COL21
+      type: Plain Text
+
+    heading: 
+      heading: Col21
+      alignment: start
+
+    layout: 
+      sequence: 210
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL22 =======================================
+    id: 93250960859999704
+    identification: 
+      column-name: COL22
+      type: Plain Text
+
+    heading: 
+      heading: Col22
+      alignment: start
+
+    layout: 
+      sequence: 220
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL23 =======================================
+    id: 93251037457999705
+    identification: 
+      column-name: COL23
+      type: Plain Text
+
+    heading: 
+      heading: Col23
+      alignment: start
+
+    layout: 
+      sequence: 230
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL24 =======================================
+    id: 93251152164999706
+    identification: 
+      column-name: COL24
+      type: Plain Text
+
+    heading: 
+      heading: Col24
+      alignment: start
+
+    layout: 
+      sequence: 240
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL25 =======================================
+    id: 93251257591999707
+    identification: 
+      column-name: COL25
+      type: Plain Text
+
+    heading: 
+      heading: Col25
+      alignment: start
+
+    layout: 
+      sequence: 250
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL26 =======================================
+    id: 93251338157999708
+    identification: 
+      column-name: COL26
+      type: Plain Text
+
+    heading: 
+      heading: Col26
+      alignment: start
+
+    layout: 
+      sequence: 260
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL27 =======================================
+    id: 93251442360999709
+    identification: 
+      column-name: COL27
+      type: Plain Text
+
+    heading: 
+      heading: Col27
+      alignment: start
+
+    layout: 
+      sequence: 270
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL28 =======================================
+    id: 93251552894999710
+    identification: 
+      column-name: COL28
+      type: Plain Text
+
+    heading: 
+      heading: Col28
+      alignment: start
+
+    layout: 
+      sequence: 280
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL29 =======================================
+    id: 93251677021999711
+    identification: 
+      column-name: COL29
+      type: Plain Text
+
+    heading: 
+      heading: Col29
+      alignment: start
+
+    layout: 
+      sequence: 290
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL30 =======================================
+    id: 93251750578999712
+    identification: 
+      column-name: COL30
+      type: Plain Text
+
+    heading: 
+      heading: Col30
+      alignment: start
+
+    layout: 
+      sequence: 300
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL31 =======================================
+    id: 93251817050999713
+    identification: 
+      column-name: COL31
+      type: Plain Text
+
+    heading: 
+      heading: Col31
+      alignment: start
+
+    layout: 
+      sequence: 310
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL32 =======================================
+    id: 93251983475999714
+    identification: 
+      column-name: COL32
+      type: Plain Text
+
+    heading: 
+      heading: Col32
+      alignment: start
+
+    layout: 
+      sequence: 320
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL33 =======================================
+    id: 93252044824999715
+    identification: 
+      column-name: COL33
+      type: Plain Text
+
+    heading: 
+      heading: Col33
+      alignment: start
+
+    layout: 
+      sequence: 330
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL34 =======================================
+    id: 93252165896999716
+    identification: 
+      column-name: COL34
+      type: Plain Text
+
+    heading: 
+      heading: Col34
+      alignment: start
+
+    layout: 
+      sequence: 340
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL35 =======================================
+    id: 93252268151999717
+    identification: 
+      column-name: COL35
+      type: Plain Text
+
+    heading: 
+      heading: Col35
+      alignment: start
+
+    layout: 
+      sequence: 350
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL36 =======================================
+    id: 93252293888999718
+    identification: 
+      column-name: COL36
+      type: Plain Text
+
+    heading: 
+      heading: Col36
+      alignment: start
+
+    layout: 
+      sequence: 360
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL37 =======================================
+    id: 93252468549999719
+    identification: 
+      column-name: COL37
+      type: Plain Text
+
+    heading: 
+      heading: Col37
+      alignment: start
+
+    layout: 
+      sequence: 370
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL38 =======================================
+    id: 93252538097999720
+    identification: 
+      column-name: COL38
+      type: Plain Text
+
+    heading: 
+      heading: Col38
+      alignment: start
+
+    layout: 
+      sequence: 380
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL39 =======================================
+    id: 93252625249999721
+    identification: 
+      column-name: COL39
+      type: Plain Text
+
+    heading: 
+      heading: Col39
+      alignment: start
+
+    layout: 
+      sequence: 390
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL40 =======================================
+    id: 93252728818999722
+    identification: 
+      column-name: COL40
+      type: Plain Text
+
+    heading: 
+      heading: Col40
+      alignment: start
+
+    layout: 
+      sequence: 400
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL41 =======================================
+    id: 93252870720999723
+    identification: 
+      column-name: COL41
+      type: Plain Text
+
+    heading: 
+      heading: Col41
+      alignment: start
+
+    layout: 
+      sequence: 410
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL42 =======================================
+    id: 93252960767999724
+    identification: 
+      column-name: COL42
+      type: Plain Text
+
+    heading: 
+      heading: Col42
+      alignment: start
+
+    layout: 
+      sequence: 420
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL43 =======================================
+    id: 93253037347999725
+    identification: 
+      column-name: COL43
+      type: Plain Text
+
+    heading: 
+      heading: Col43
+      alignment: start
+
+    layout: 
+      sequence: 430
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL44 =======================================
+    id: 93253161934999726
+    identification: 
+      column-name: COL44
+      type: Plain Text
+
+    heading: 
+      heading: Col44
+      alignment: start
+
+    layout: 
+      sequence: 440
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL45 =======================================
+    id: 93253225521999727
+    identification: 
+      column-name: COL45
+      type: Plain Text
+
+    heading: 
+      heading: Col45
+      alignment: start
+
+    layout: 
+      sequence: 450
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL46 =======================================
+    id: 93253361325000978
+    identification: 
+      column-name: COL46
+      type: Plain Text
+
+    heading: 
+      heading: Col46
+      alignment: start
+
+    layout: 
+      sequence: 460
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL47 =======================================
+    id: 93253480249000979
+    identification: 
+      column-name: COL47
+      type: Plain Text
+
+    heading: 
+      heading: Col47
+      alignment: start
+
+    layout: 
+      sequence: 470
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL48 =======================================
+    id: 93253509117000980
+    identification: 
+      column-name: COL48
+      type: Plain Text
+
+    heading: 
+      heading: Col48
+      alignment: start
+
+    layout: 
+      sequence: 480
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL49 =======================================
+    id: 93253659918000981
+    identification: 
+      column-name: COL49
+      type: Plain Text
+
+    heading: 
+      heading: Col49
+      alignment: start
+
+    layout: 
+      sequence: 490
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COL50 =======================================
+    id: 93253712952000982
+    identification: 
+      column-name: COL50
+      type: Plain Text
+
+    heading: 
+      heading: Col50
+      alignment: start
+
+    layout: 
+      sequence: 500
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: I2_EBS_TABLE_NAME ========================
+  id: 76716500180101430
+  identification: 
+    name: I2_EBS_TABLE_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 90
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I2_EBS_COLUMN_NAME =======================
+  id: 76716670665101432
+  identification: 
+    name: I2_EBS_COLUMN_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 100
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I2_OPERATOR ==============================
+  id: 76716749450101433
+  identification: 
+    name: I2_OPERATOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 110
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_VALUE =================================
+  id: 76716828808101434
+  identification: 
+    name: P2_VALUE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 120
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: I2_FBDI_IDENTIFIER =======================
+  id: 93213066643796590
+  identification: 
+    name: I2_FBDI_IDENTIFIER
+    type: Display Only
+
+  label: 
+    label: FBDI Identifier
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: false
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - margin-top-none
+    - t-Form-fieldContainer--boldDisplay
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: B_Filter ====================================
+  id: 76314107459953242
+  identification: 
+    button-name: B_Filter
+    label: Filter
+
+  layout: 
+    sequence: 50
+    region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    alignment: Left center
+
+  appearance: 
+    button-template: Custom Button
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--small
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  configuration: 
+    build-option: Commented Out # 219352748727126957
+
+- # ====== Button: B_APPLY =====================================
+  id: 77430549613148841
+  identification: 
+    button-name: B_APPLY
+    label: Apply
+
+  layout: 
+    sequence: 30
+    region: DA_Cancel_button # 77431078750148846
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Custom Button
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--small
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: B_CANCEL ====================================
+  id: 77431140698148847
+  identification: 
+    button-name: B_CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 20
+    region: DA_Cancel_button # 77431078750148846
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Custom Button
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--small
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: B_Back ======================================
+  id: 94118641844826091
+  identification: 
+    button-name: B_Back
+    label: Back
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Custom Button
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--small
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+      page: 1 # Home
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: B_Export ====================================
+  id: 220096233748755832
+  identification: 
+    button-name: B_Export
+    label: Export
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Custom Button
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--small
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: DA_Inline_dialog ====================
+  id: 76315000595953251
+  identification: 
+    name: DA_Inline_dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: B_Filter # 76314107459953242
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 76315046595953252
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: DA_Cancel_button # 77431078750148846
+
+    execution: 
+      sequence: 40
+      event: DA_Inline_dialog # 76315000595953251
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 76720685519101472
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: R_PREVIEW # 93213129401796591
+
+    execution: 
+      sequence: 20
+      event: DA_Inline_dialog # 76315000595953251
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: DA_INLINE_BTN =======================
+  id: 77430679430148842
+  identification: 
+    name: DA_INLINE_BTN
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: B_APPLY # 77430549613148841
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 77430813581148843
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: R_PREVIEW # 93213129401796591
+
+    execution: 
+      sequence: 20
+      event: DA_INLINE_BTN # 77430679430148842
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Submit Page =================================
+    id: 77430948876148845
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: DA_INLINE_BTN # 77430679430148842
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: DA_cancel_btn_dya  ==================
+  id: 77962085967270224
+  identification: 
+    name: 'DA_cancel_btn_dya '
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: B_CANCEL # 77431140698148847
+
+  actions: 
+  - # ====== Action: Close Region ================================
+    id: 77962125117270225
+    identification: 
+      action: Close Region
+
+    affected-elements: 
+      selection-type: Region
+      region: DA_Cancel_button # 77431078750148846
+
+    execution: 
+      sequence: 30
+      event: 'DA_cancel_btn_dya ' # 77962085967270224
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 77962404505270227
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        begin
+        delete from FILTER_DATA where 1 = 1;
+        end;
+
+    execution: 
+      sequence: 10
+      event: 'DA_cancel_btn_dya ' # 77962085967270224
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 77962491251270228
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Region
+      region: R_FILTER # 77429502238148830
+
+    execution: 
+      sequence: 20
+      event: 'DA_cancel_btn_dya ' # 77962085967270224
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: PR_filter_copy - Save Interactive Grid Data 
+  id: 77430461349148840
+  identification: 
+    name: PR_filter_copy - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: R_FILTER # 77429502238148830
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: PR_Generate_CSV ============================
+  id: 220096277560755833
+  identification: 
+    name: PR_Generate_CSV
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+      x_error varchar2(100);
+      x_status varchar2(10);
+      BEGIN
+      xxmig_generate_csv_file_pkg.xxmig_supplier_template(:I2_FBDI_IDENTIFIER,x_status,x_error);
+      END;
+      
+      
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: B_Export # 220096233748755832
+

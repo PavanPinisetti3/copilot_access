@@ -1,0 +1,91 @@
+---
+- # ====== Breadcrumb: Breadcrumb ==============================
+  id: 54324425495204452
+  identification: 
+    name: Breadcrumb
+
+  entries: 
+  - # ====== Entry: Home =========================================
+    id: 54324605965204549
+    identification: 
+      name: Home
+      page-number: 1
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.'
+        page: 1 # Home
+
+  - # ====== Entry: Update Email – Without Responsibility ========
+    id: 54533382586207604
+    identification: 
+      name: Update Email – Without Responsibility
+      page-number: 2
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # Update Email – Without Responsibility
+
+  - # ====== Entry: Update Email – Using Responsibility ==========
+    id: 54544475065207621
+    identification: 
+      name: Update Email – Using Responsibility
+      page-number: 3
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # Update Email – Using Responsibility
+
+  - # ====== Entry: Add/Edit User ================================
+    id: 54760629551230906
+    identification: 
+      name: Add/Edit User
+      page-number: 6
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+        page: 6 # Add/Edit User
+
+  - # ====== Entry: Employees ====================================
+    id: 56337528397312114
+    identification: 
+      name: Employees
+      page-number: 9
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:9:&APP_SESSION.::&DEBUG.:::'
+        page: 9 # Employees
+
+  - # ====== Entry: Customer Locations ===========================
+    id: 56821509059036805
+    identification: 
+      name: Customer Locations
+      page-number: 4
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
+        page: 4 # Customer Locations
+
