@@ -1,0 +1,1361 @@
+==================================================
+ORACLE APEX REVIEW STANDARDS AND TEMPLATES
+==================================================
+
+1. REVIEW FORMAT REQUIREMENTS
+--------------------------------------------------
+All reviews must follow this exact structure and formatting:
+
+╔══════════════════════════════════════════════════╗
+║             DOCUMENT HEADER TEMPLATE              ║
+╚══════════════════════════════════════════════════╝
+
+COMPONENT REVIEW
+═══════════════
+Use ASCII box drawing characters for all tables.
+Required columns: Page | Current Name | Required Name | Status
+
+CODE ANALYSIS
+════════════
+Show detailed code review with current code and issues.
+
+CORRECTED CODE EXAMPLES
+═════════════════════
+Provide properly formatted solution code.
+
+2. TABLE FORMATTING RULES
+--------------------------------------------------
+a) Component Review Table Format:
+╔══════╦═══════════════════╦═══════════════════╦══════════════════════╗
+║ Page ║ Current Name      ║ Required Name     ║ Status               ║
+╠══════╬═══════════════════╬═══════════════════╬══════════════════════╣
+║  #   ║ Component Name    ║ Standard Name     ║ FOLLOWS/NON-COMP   ║
+╚══════╩═══════════════════╩═══════════════════╩══════════════════════╝
+
+b) Code Analysis Table Format:
+╔══════╦═══════════════╦════════════════════════════════════════════╗
+║ Page ║ Component     ║ Issues Found                               ║
+╠══════╬═══════════════╬════════════════════════════════════════════╣
+║  #   ║ Name         ║ List issues with current code              ║
+╚══════╩═══════════════╩════════════════════════════════════════════╝
+
+3. NAMING CONVENTIONS
+--------------------------------------------------
+Component Type | Format                  | Example
+--------------|-------------------------|------------------
+Region        | R_<PURPOSE>_<DETAIL>    | R_EMP_REPORT
+Page Item     | P<page>_<COLUMN_USE>    | P1_EMP_NAME
+Button        | BTN_<ACTION>_<DETAIL>   | BTN_SAVE_EMP
+Process       | PR_<PURPOSE>_<ACTION>   | PR_EMP_INSERT
+Dynamic Action| <EVENT>_<TARGET>_DY     | CHANGE_EMP_DY
+Validation    | _VAL_<ITEM>_<CONDITION> | _VAL_P1_NAME_NN
+
+4. CODE REVIEW CRITERIA
+--------------------------------------------------
+For each code component, check and document:
+
+a) SQL Queries:
+   - Keywords in UPPERCASE
+   - Explicit column selection (no SELECT *)
+   - Table aliases
+   - Proper indentation
+   - Column aliases with AS
+   Example format:
+   ```sql
+   SELECT E.EMPLOYEE_ID    AS EMP_ID,
+          E.EMPLOYEE_NAME  AS EMP_NAME
+   FROM   EMPLOYEES E
+   WHERE  E.DEPT_ID = :P1_DEPT
+   ```
+
+b) PL/SQL Code:
+   - Proper variable prefixes:
+     * lc_ for VARCHAR2/CHAR
+     * ln_ for NUMBER
+     * ld_ for DATE
+     * lb_ for BOOLEAN
+   - Exception handling
+   - Debug instrumentation
+   - Proper indentation
+   Example format:
+   ```sql
+   DECLARE
+       lc_name    VARCHAR2(100);
+       ln_count   NUMBER;
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start process');
+
+       SELECT COUNT(*)
+       INTO   ln_count
+       FROM   EMPLOYEES;
+
+       APEX_DEBUG.MESSAGE('Found ' || ln_count || ' employees');
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+5. REVIEW DOCUMENT SECTIONS
+--------------------------------------------------
+Each review must include these sections in order:
+
+a) Document Header
+b) Component Review table
+c) Code Analysis table
+d) Corrected Code Examples
+e) Compliance Summary
+
+6. STATUS DESCRIPTIONS
+--------------------------------------------------
+Use these exact status messages:
+- FOLLOWS
+- NON-FOLLOWS - Missing prefix
+- NON-FOLLOWS - Wrong format
+- NON-FOLLOWS - Not descriptive
+- NON-FOLLOWS - Spelling error
+- FOLLOWS (System Page)
+- FOLLOWS (Page Name)
+
+7. COMPLIANCE SUMMARY FORMAT
+--------------------------------------------------
+COMPLIANCE SUMMARY
+════════════════
+Total Components: ##
+FOLLOWS: ##
+Non-FOLLOWS: ##
+Compliance Rate: ##.##%
+
+Key Issues:
+1. Issue 1
+2. Issue 2
+...
+
+Recommendations:
+1. Recommendation 1
+2. Recommendation 2
+...
+
+8. ASCII BOX DRAWING CHARACTERS
+--------------------------------------------------
+╔ ╗ ╚ ╝ ╠ ╣ ═ ║ ╦ ╩ ╬
+
+Use these for all tables and section headers.
+
+9. CODE BLOCK FORMATTING
+--------------------------------------------------
+Always use triple backticks for code blocks:
+```sql
+code here
+```
+
+10. REVIEW CHECKLIST
+--------------------------------------------------
+□ Document uses correct ASCII box characters
+□ All tables properly aligned
+□ Component review table complete
+□ Code analysis includes current code
+□ Corrected code examples provided
+□ Compliance summary included
+□ All status messages follow standard format
+□ Code blocks properly formatted
+□ Recommendations are specific and actionable
+□ Document follows section order
+
+11. HTML STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) General Rules:
+   - NEVER embed full HTML documents (<DOCTYPE>, <html>, <head>, <body>)
+   - Embed only SNIPPET code (div, form elements, sections)
+   - Use semantic HTML5 tags (header, nav, main, section, article, footer)
+   - Always include proper lang attribute in page language
+   - Close all tags properly (valid XHTML within APEX)
+
+b) APEX Integration:
+   - Use APEX page items (P<page>_<ITEM>) instead of raw form fields
+   - Leverage APEX theme system for consistent styling
+   - Use APEX item rendering instead of HTML input tags
+   - Bind form values to APEX session state (:P1_ITEM_NAME)
+   - Use APEX buttons/processes instead of HTML form submit
+
+c) Form Elements:
+   - Use APEX_ITEM or page item components for all input
+   - Required fields marked with APEX validation rules
+   - Form elements must be in APEX form container
+   - Use APEX autocomplete/LOV for dropdown lists
+   - Implement APEX field-level validation (required, pattern, range)
+
+d) Accessibility Requirements (WCAG 2.1 AA):
+   - Every form input must have associated <label> with for attribute
+   - Use aria-label or aria-labelledby for complex controls
+   - Include aria-required for mandatory fields
+   - Add aria-describedby for field help text
+   - Implement aria-live for error messages
+   - Ensure color not sole means of information (use icons/text)
+   - Maintain minimum 4.5:1 contrast ratio for text
+   - Include skip links for keyboard navigation
+
+e) Meta Tags:
+   - charset already provided by APEX (don't duplicate)
+   - viewport already set by APEX theme (don't duplicate)
+   - If custom meta needed, place in Page HTML Header attribute
+   - Never override APEX system meta tags
+
+f) Code Structure:
+   ✓ Well-indented (2 or 4 spaces, consistent)
+   ✓ ID attributes use kebab-case (id="form-section")
+   ✓ Class names use kebab-case (class="form-container")
+   ✓ Data attributes for custom data (data-item="P1_NAME")
+   ✗ No inline style attributes (use CSS classes instead)
+   ✗ No hardcoded values (use APEX variables/binds)
+   ✗ No onclick handlers (use APEX Dynamic Actions)
+
+g) Example - CORRECT:
+   ```html
+   <!-- Region HTML content only (no full document structure) -->
+   <div class="form-section" id="customer-form">
+       <h2>Customer Registration</h2>
+       <!-- APEX items rendered here by APEX, not raw HTML inputs -->
+       <!-- Use APEX buttons, not HTML buttons -->
+   </div>
+   ```
+
+h) Example - WRONG (Don't Do This):
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>Form</title>
+   </head>
+   <body>
+       <!-- Multiple body tags cause DOM conflicts -->
+       <form method="post" action="">
+           <!-- Raw HTML form won't integrate with APEX -->
+       </form>
+   </body>
+   </html>
+   ```
+
+12. CSS STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) Location & Organization:
+   - Use external CSS files in Shared Components > Static Files
+   - Create separate files for different features (app-forms.css, app-tables.css)
+   - Do NOT embed <style> tags in HTML regions
+   - Do NOT use inline style attributes (style="...")
+   - CSS in Page CSS attribute only for page-specific rules
+
+b) Variables & Theming:
+   - Use CSS custom properties (variables) for colors
+   - Define variables at :root level
+   - Follow naming: --app-<context>-<property>
+   - Use APEX theme CSS classes when available (#t-Region, .t-Button, etc.)
+   - Never hardcode colors (always use variables/theme values)
+
+c) Responsive Design (Mobile-First):
+   - Use mobile-first approach (base styles first)
+   - Implement breakpoints: 480px, 768px, 1024px, 1440px
+   - Use max-width for containers (not 100vw/100vh)
+   - Ensure touch targets minimum 44x44 pixels
+   - Test on: mobile, tablet, desktop
+
+d) Accessibility Requirements:
+   - Define :focus and :focus-visible states for all interactive elements
+   - Minimum contrast ratio 4.5:1 (normal text), 3:1 (large text)
+   - Define :disabled states with reduced opacity
+   - Support @media (prefers-color-scheme: dark) for dark mode
+   - Support @media (prefers-contrast: more) for high contrast
+   - Support @media (prefers-reduced-motion: reduce) for animations
+
+e) Performance Guidelines:
+   - Minimize selectors (avoid deep nesting)
+   - Use classes instead of IDs for styling
+   - Leverage flexbox/grid instead of floats
+   - Use CSS variables to reduce repetition
+   - Keep CSS file size < 100KB (minified)
+   - Combine related CSS files when possible
+
+f) Naming Conventions:
+   - Kebab-case for class names (class-name)
+   - Semantic names describing purpose (not appearance)
+   - BEM methodology for complex components
+   ✓ .button-primary, .form-section, .region-header
+   ✗ .red-button, .big-text, .right-aligned
+
+g) Example - CORRECT:
+   ```css
+   :root {
+       --app-primary-color: #1c4e80;
+       --app-primary-dark: #173b5c;
+       --app-bg-light: #f3f6fa;
+       --app-text-color: #333;
+       --spacing-base: 10px;
+   }
+
+   .form-container {
+       background-color: var(--app-bg-light);
+       padding: var(--spacing-base);
+       max-width: 600px;
+   }
+
+   .form-container input:focus {
+       outline: none;
+       border-color: var(--app-primary-color);
+       box-shadow: 0 0 4px rgba(28, 78, 128, 0.3);
+   }
+
+   @media (max-width: 768px) {
+       .form-container { padding: calc(var(--spacing-base) / 2); }
+   }
+
+   @media (prefers-color-scheme: dark) {
+       :root {
+           --app-bg-light: #1a1a1a;
+           --app-text-color: #e0e0e0;
+       }
+   }
+   ```
+
+h) Example - WRONG (Don't Do This):
+   ```css
+   <style>
+       body { width: 100vw; height: 100vh; }
+       .form { width: 100%; }
+       input { style="background: #fff;" }
+       button:hover { background: #1c4e80; }
+       /* No focus state, no dark mode, no mobile breakpoints */
+   </style>
+   ```
+
+13. JAVASCRIPT STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) Framework & Approach:
+   - Use APEX JavaScript APIs (apex.*) not raw jQuery
+   - Use apex.ready() for page load operations
+   - Use apex.server.process() for AJAX calls
+   - Use Dynamic Actions instead of inline onclick handlers
+   - Use apex.item API for item manipulation
+
+b) Code Structure:
+   - Keep functions focused and modular
+   - Use IIFE (Immediately Invoked Function Expression) to avoid global scope
+   - Declare variables with const/let (never var)
+   - Use const by default, let only when reassignment needed
+   - Use template literals for string concatenation
+   - Use arrow functions for callbacks
+
+c) Naming Conventions:
+   - camelCase for variables and functions: myFunction(), myVariable
+   - UPPER_CASE for constants: CONST_VALUE
+   - Prefix: is/has/can for boolean functions: isValid(), hasError()
+   - Prefix: get/set for accessor functions: getValue(), setValue()
+
+d) Debugging & Logging:
+   - Use apex.debug.log() for logging (respects APEX debug level)
+   - Always use appropriate log levels: 'INFO', 'WARNING', 'ERROR'
+   - Console.log() only for development (remove before production)
+   - Include context in debug messages: 'Function XYZ: message'
+
+e) Error Handling:
+   - Always include try/catch blocks for critical operations
+   - Use specific error types (not generic Error)
+   - Log errors with full context using APEX_DEBUG
+   - Provide user-friendly error messages via apex.message
+   - Never expose technical errors to end users
+
+f) Performance Guidelines:
+   - Minimize DOM queries (cache jQuery selections)
+   - Debounce frequent events (scroll, resize, keyup)
+   - Use event delegation for dynamic elements
+   - Lazy-load heavy JavaScript features
+   - Keep JavaScript files < 50KB (minified)
+
+g) Accessibility Requirements:
+   - Don't disable keyboard navigation (Tab, Enter, Escape, Arrows)
+   - Don't hide focus indicators without replacing them
+   - Announce changes with aria-live regions
+   - Use aria-expanded for toggle controls
+   - Use aria-pressed for toggle buttons
+   - Implement keyboard shortcuts with proper documentation
+   - Test with keyboard only (no mouse)
+
+h) APEX Integration Best Practices:
+   - Use apex.item() to access page items
+   - Use apex.items API for bulk operations
+   - Use apex.page.fetch() for asynchronous page submit
+   - Use apex.server.process() for background processes
+   - Respect APEX page security and CSRF tokens
+   - Use apex.navigation for page redirection
+
+i) Example - CORRECT:
+   ```javascript
+   (function() {
+       'use strict';
+       
+       const APP = {
+           formElement: null,
+           
+           init: function() {
+               apex.debug.log('INFO', 'APP.init: Initializing application');
+               this.cacheDOM();
+               this.bindEvents();
+           },
+           
+           cacheDOM: function() {
+               this.formElement = document.getElementById('customer-form');
+           },
+           
+           bindEvents: function() {
+               if (this.formElement) {
+                   this.formElement.addEventListener('submit', 
+                       this.handleSubmit.bind(this));
+               }
+           },
+           
+           handleSubmit: function(event) {
+               event.preventDefault();
+               
+               try {
+                   const formData = {
+                       name: apex.item('P1_NAME').getValue(),
+                       email: apex.item('P1_EMAIL').getValue()
+                   };
+                   
+                   apex.debug.log('INFO', 
+                       'APP.handleSubmit: Submitting data: ' + JSON.stringify(formData));
+                   
+                   this.submitForm(formData);
+               } catch (error) {
+                   apex.debug.error('APP.handleSubmit: ' + error.message);
+                   apex.message.alert('An error occurred. Please try again.');
+               }
+           },
+           
+           submitForm: function(data) {
+               apex.server.process('SAVE_CUSTOMER', 
+                   { p_data: JSON.stringify(data) },
+                   {
+                       success: function(response) {
+                           apex.message.alert('Data saved successfully');
+                       },
+                       error: function(error) {
+                           apex.debug.error('submitForm error: ' + error);
+                           apex.message.alert('Failed to save data');
+                       }
+                   }
+               );
+           }
+       };
+       
+       // Initialize when APEX is ready
+       apex.ready(APP.init.bind(APP));
+   })();
+   ```
+
+j) Example - WRONG (Don't Do This):
+   ```javascript
+   <!-- Inline onclick handler -->
+   <button onclick="showAlert()">Click Me</button>
+   
+   <!-- Global scope pollution -->
+   var globalCounter = 0;
+   function showAlert() {
+       console.log('clicked'); // Wrong: console.log in production
+       alert("Welcome"); // Wrong: hardcoded alert
+       globalCounter++; // Wrong: global variables
+   }
+   
+   <!-- No error handling -->
+   const value = document.getElementById('P1_NAME').value; // Might be null
+   
+   <!-- No APEX integration -->
+   jQuery('#form').on('click', function() { // jQuery in APEX 5+
+       ... // Missing apex.ready, apex.debug, error handling
+   });
+   ```
+
+14. PL/SQL PROCESS STANDARDS FOR APEX APPLICATIONS
+--------------------------------------------------
+a) Process Naming Conventions:
+   - Format: PR_<PURPOSE>_<ACTION>
+   - Examples: PR_EMP_INSERT, PR_USER_VALIDATE, PR_DATA_FETCH
+   - Always use meaningful descriptive names
+   - Never use generic names like "Process", "PR_USER", "Do Something"
+
+b) Code Structure & Formatting:
+   - DECLARE section: One variable per line with type and optional comment
+   - BEGIN section: Statements properly indented (4 spaces)
+   - Exception handling: Required for all processes
+   - Comments: Explain complex logic
+   - Line length: Maximum 100 characters
+   Example format:
+   ```plsql
+   DECLARE
+       lc_emp_name    VARCHAR2(100);    -- Employee name
+       ln_emp_id      NUMBER;            -- Employee ID
+       ld_hire_date   DATE;              -- Hire date
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_EMP_INSERT');
+       
+       -- Fetch employee details
+       SELECT NAME INTO lc_emp_name FROM EMPLOYEES WHERE ID = :P1_EMP_ID;
+       
+       APEX_DEBUG.MESSAGE('Processing employee: ' || lc_emp_name);
+   EXCEPTION
+       WHEN NO_DATA_FOUND THEN
+           APEX_DEBUG.ERROR('Employee not found');
+           RAISE_APPLICATION_ERROR(-20001, 'Employee not found');
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+c) Variable Naming Standards:
+   - Prefix indicates type (required):
+     * lc_ for VARCHAR2/CHAR
+     * ln_ for NUMBER
+     * ld_ for DATE
+     * lb_ for BOOLEAN
+     * lo_ for OBJECT
+   - Use %TYPE anchor for table columns: emp.NAME%TYPE
+   - Use %ROWTYPE for full row: employees%ROWTYPE
+   - Never use: P_, V_, G_, global prefixes (APEX uses these)
+   Example:
+   ```plsql
+   DECLARE
+       lc_status          VARCHAR2(10);       -- ✓ Correct
+       ln_count           NUMBER;              -- ✓ Correct
+       ld_process_date    DATE;                -- ✓ Correct
+       P_STATUS           VARCHAR2(10);       -- ✗ Wrong (APEX reserved)
+       v_count            NUMBER;              -- ✗ Wrong (use ln_)
+   BEGIN
+   ```
+
+d) SQL Query Standards in PL/SQL:
+   - Use table aliases (E for employees, D for departments)
+   - Explicit column selection (never SELECT *)
+   - Use %TYPE for column references: employees.name%TYPE
+   - Use bind variables (:P1_ITEM) not string concatenation
+   - Use prepared statements when possible
+   Example:
+   ```plsql
+   -- ✓ CORRECT
+   SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME
+   INTO   ln_emp_id, lc_emp_name
+   FROM   EMPLOYEES E
+   WHERE  E.EMPLOYEE_ID = :P1_EMP_ID;
+   
+   -- ✗ WRONG (SELECT *, no alias, string concat)
+   SELECT * INTO lc_data FROM EMPLOYEES
+   WHERE EMPLOYEE_ID = p_id;
+   ```
+
+e) Error Handling Requirements:
+   - ALL processes must have exception handling
+   - Specific exceptions BEFORE generic WHEN OTHERS
+   - Always use APEX_DEBUG.ERROR() for logging
+   - Use RAISE_APPLICATION_ERROR() for user messages
+   - Never suppress exceptions silently
+   Example:
+   ```plsql
+   BEGIN
+       -- Process logic
+   EXCEPTION
+       WHEN NO_DATA_FOUND THEN
+           APEX_DEBUG.ERROR('No employee found for ID: ' || :P1_EMP_ID);
+           RAISE_APPLICATION_ERROR(-20001, 'Employee not found');
+       WHEN TOO_MANY_ROWS THEN
+           APEX_DEBUG.ERROR('Multiple employees with ID: ' || :P1_EMP_ID);
+           RAISE_APPLICATION_ERROR(-20002, 'Data integrity error');
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Unexpected error in PR_EMP_FETCH: ' || SQLERRM);
+           RAISE_APPLICATION_ERROR(-20099, 'System error: ' || SQLERRM);
+   END;
+   ```
+
+f) Debugging & Instrumentation:
+   - Use APEX_DEBUG.MESSAGE() for informational logging
+   - Use APEX_DEBUG.ERROR() for error logging
+   - Log at entry point: 'Start: PR_PROCESS_NAME'
+   - Log at exit point: 'End: PR_PROCESS_NAME'
+   - Log significant operations and values
+   - Never use DBMS_OUTPUT in production
+   Example:
+   ```plsql
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_EMP_INSERT');
+       
+       APEX_DEBUG.MESSAGE('Input - P1_EMP_NAME: ' || :P1_EMP_NAME);
+       APEX_DEBUG.MESSAGE('Input - P1_DEPT_ID: ' || :P1_DEPT_ID);
+       
+       -- Insert logic
+       INSERT INTO EMPLOYEES (NAME, DEPT_ID) VALUES (:P1_EMP_NAME, :P1_DEPT_ID);
+       
+       APEX_DEBUG.MESSAGE('Rows inserted: ' || SQL%ROWCOUNT);
+       APEX_DEBUG.MESSAGE('End: PR_EMP_INSERT - Success');
+   EXCEPTION
+       ...
+   END;
+   ```
+
+g) APEX Integration Best Practices:
+   - Use :P<page>_<item> syntax for binding page items
+   - Use apex.message.alert() or apex.message.success() for user feedback
+   - Commit/rollback handling:
+     * APEX processes auto-commit unless wrapped in transaction
+     * Use savepoints for complex operations
+     * Always be explicit about transaction handling
+   - Use apex.navigation for post-process navigation
+   Example:
+   ```plsql
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_SAVE_EMPLOYEE');
+       
+       -- Read from page items
+       IF :P1_EMP_NAME IS NULL THEN
+           RAISE_APPLICATION_ERROR(-20001, 'Employee name required');
+       END IF;
+       
+       -- Process data
+       INSERT INTO EMPLOYEES (NAME, SALARY) 
+       VALUES (:P1_EMP_NAME, :P1_SALARY);
+       
+       -- Set return item
+       :P1_EMP_ID := EMPLOYEES_SEQ.CURRVAL;
+       
+       -- Log success
+       APEX_DEBUG.MESSAGE('Employee saved with ID: ' || :P1_EMP_ID);
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error saving employee: ' || SQLERRM);
+           RAISE_APPLICATION_ERROR(-20099, SQLERRM);
+   END;
+   ```
+
+h) Process Performance Guidelines:
+   - Minimize round-trips to database
+   - Use bulk operations (FORALL, INSERT..SELECT) when possible
+   - Avoid nested loops with database queries
+   - Use efficient SQL (proper indexes, joins)
+   - Consider pagination for large result sets
+   - Profile slow processes using APEX_DEBUG
+
+i) Common Mistakes to Avoid:
+   ✗ No exception handling
+   ✗ Using generic variable names: v_data, v_temp, v_result
+   ✗ SELECT * without explicit columns
+   ✗ Missing WHERE clause (affects all rows)
+   ✗ String concatenation for SQL (security risk)
+   ✗ Hardcoded values (use parameters/page items)
+   ✗ Using DBMS_OUTPUT instead of APEX_DEBUG
+   ✗ Not validating input parameters
+   ✗ Silent failures (catching but not logging)
+   ✗ Mixing business logic with UI logic
+   ✗ Using reserved APEX prefixes (P_, V_, G_)
+   ✗ No commit/rollback strategy
+
+
+15. COMBINED HTML/CSS/JAVASCRIPT WORKFLOW
+--------------------------------------------------
+a) Planning Phase:
+   - Identify APEX components (items, buttons, regions, processes)
+   - Determine if custom HTML needed or APEX defaults sufficient
+   - Plan responsive design and accessibility requirements
+   - Design CSS architecture and organization
+
+b) Implementation Phase:
+   - Create APEX page items in designer (don't hardcode HTML)
+   - Create external CSS files in Shared Components
+   - Write JavaScript with APEX APIs
+   - Use Dynamic Actions for client-side logic
+   - Test accessibility with keyboard navigation
+
+c) Testing Phase:
+   - Validate HTML with W3C Validator (after rendering)
+   - CSS responsive testing at all breakpoints
+   - JavaScript console for errors (apex.debug.log)
+   - Accessibility testing: keyboard, screen reader, contrast
+   - Cross-browser testing (Chrome, Firefox, Safari, Edge)
+
+d) Integration Checklist:
+   ☑ HTML uses only region snippets (no full documents)
+   ☑ All form inputs are APEX items (not raw HTML)
+   ☑ CSS in external files with variables
+   ☑ JavaScript uses APEX APIs
+   ☑ All interactive elements keyboard accessible
+   ☑ WCAG 2.1 AA compliance verified
+   ☑ No console errors
+   ☑ Responsive design working
+   ☑ Error handling implemented
+   ☑ Documentation complete
+
+15. COMBINED HTML/CSS/JAVASCRIPT WORKFLOW
+--------------------------------------------------
+a) Planning Phase:
+   - Identify APEX components (items, buttons, regions, processes)
+   - Determine if custom HTML needed or APEX defaults sufficient
+   - Plan responsive design and accessibility requirements
+   - Design CSS architecture and organization
+
+b) Implementation Phase:
+   - Create APEX page items in designer (don't hardcode HTML)
+   - Create external CSS files in Shared Components
+   - Write JavaScript with APEX APIs
+   - Use Dynamic Actions for client-side logic
+   - Test accessibility with keyboard navigation
+
+c) Testing Phase:
+   - Validate HTML with W3C Validator (after rendering)
+   - CSS responsive testing at all breakpoints
+   - JavaScript console for errors (apex.debug.log)
+   - Accessibility testing: keyboard, screen reader, contrast
+   - Cross-browser testing (Chrome, Firefox, Safari, Edge)
+
+d) Integration Checklist:
+   ☑ HTML uses only region snippets (no full documents)
+   ☑ All form inputs are APEX items (not raw HTML)
+   ☑ CSS in external files with variables
+   ☑ JavaScript uses APEX APIs
+   ☑ All interactive elements keyboard accessible
+   ☑ WCAG 2.1 AA compliance verified
+   ☑ No console errors
+   ☑ Responsive design working
+   ☑ Error handling implemented
+   ☑ Documentation complete
+
+16. COMMON MISTAKES TO AVOID
+--------------------------------------------------
+HTML Mistakes:
+✗ Embedding <!DOCTYPE>, <html>, <head>, <body> tags
+✗ Using raw HTML form instead of APEX items
+✗ Hardcoding dropdown options (use LOV instead)
+✗ Missing aria-label and aria-labelledby
+✗ Using onclick handlers instead of Dynamic Actions
+✗ Duplicate meta tags already set by APEX
+
+CSS Mistakes:
+✗ Embedding <style> tags in HTML regions
+✗ Using inline style attributes
+✗ Hardcoding colors (no variables)
+✗ No mobile breakpoints (@media)
+✗ Missing :focus states
+✗ Using IDs for styling (use classes)
+✗ Styling body tag (affects entire page)
+✗ Using 100vw/100vh (causes overflow)
+
+JavaScript Mistakes:
+✗ Using console.log in production
+✗ Global variable declarations (use IIFE)
+✗ Using var instead of const/let
+✗ No error handling (try/catch)
+✗ Using jQuery selectors in APEX 5+
+✗ No apex.debug logging
+✗ Missing apex.ready() wrapper
+✗ Hardcoded values (use APEX items)
+✗ No keyboard event handling
+✗ Binding events on load instead of apex.ready()
+
+PL/SQL Process Mistakes:
+✗ No exception handling
+✗ Generic variable names (v_data, v_temp)
+✗ Using SELECT * without explicit columns
+✗ Missing WHERE clause (affects all rows)
+✗ String concatenation for SQL (security risk)
+✗ Hardcoded values (use parameters/page items)
+✗ Using DBMS_OUTPUT instead of APEX_DEBUG
+✗ Not validating input parameters
+✗ Silent failures (catching but not logging)
+✗ Mixing business logic with UI logic
+✗ Using reserved APEX prefixes (P_, V_, G_)
+✗ No commit/rollback strategy
+
+17. DATABASE OBJECT ACCESS AND REFERENCE STANDARDS
+--------------------------------------------------
+Database objects in the workspace include:
+- Functions      : PL/SQL functions for business logic
+- Indexes        : Performance optimization on tables
+- ORDS           : Oracle REST Data Services endpoints
+- Package Bodies : Implementation of package specifications
+- Package Specs  : Public interfaces and procedure definitions
+- Procedures     : Standalone PL/SQL procedures
+- Ref Constraints: Foreign key relationships between tables
+- Sequences      : Auto-increment ID generators
+- Synonyms       : Aliases for tables/views
+- Tables         : Primary data storage
+- Triggers       : Automatic actions on DML operations
+- Type Bodies    : Implementation of custom data types
+- Type Specs     : Custom data type definitions
+- Views          : Logical table abstractions
+- Comments       : Database object documentation
+
+a) Naming and Access Conventions:
+   
+   TABLE NAMING:
+   - Format: <prefix>_<module>_<object>
+   - Examples: xx_emp, xxcicd_employees, xxmig_mappings
+   - Access in SQL: Always use table alias (E for employees, D for dept)
+   - Never reference system tables (user_*, dba_*, all_*)
+   
+   FUNCTION NAMING:
+   - Format: <prefix>_<purpose>_<action>_fn
+   - Examples: xx_calculate_bonus_fn, xxcicd_get_emp_count_fn
+   - Return type documentation required
+   - Call with explicit parameter passing
+   
+   PROCEDURE NAMING:
+   - Format: <prefix>_<purpose>_<action>_pr
+   - Examples: xx_insert_emp_pr, xxmig_generate_csv_pr
+   - Parameter documentation required
+   - Call via EXEC or anonymous block
+   
+   PACKAGE NAMING:
+   - Format: <prefix>_<module>_<purpose>_pkg
+   - Examples: xx_erp_int_util_pkg, xxmig_fusion_sql_pkg
+   - Document all public procedures and functions
+   - Call via PACKAGE_NAME.PROCEDURE_NAME
+   
+   SEQUENCE NAMING:
+   - Format: <prefix>_<object>_seq
+   - Examples: emp_seq, xxmig_custom_seq
+   - Used for auto-incrementing primary keys
+   - Reference: SEQUENCE_NAME.NEXTVAL
+   
+   SYNONYM NAMING:
+   - Format: Same as referenced object
+   - Examples: xxcicd_employees (synonym to EMP)
+   - Use when simplifying long object names
+   - Transparent to SQL queries
+   
+   VIEW NAMING:
+   - Format: <prefix>_<module>_<purpose>_v
+   - Examples: xxcicd_emp_report_v, xxmig_employee_summary_v
+   - Document base tables and joins
+   - Use for complex multi-table queries
+   
+   TRIGGER NAMING:
+   - Format: <object>_<operation>_tr
+   - Examples: emp_insert_tr, emp_update_tr, emp_delete_tr
+   - Specify BEFORE/AFTER and INSERT/UPDATE/DELETE
+   - Log trigger operations for debugging
+   
+   INDEX NAMING:
+   - Format: <prefix>_<object>_<columns>_idx
+   - Examples: xxash_mig_user_access_u1, xxcicd_emp_idx
+   - Foreign key indexes: <table>_<ref_table>_fk_idx
+   - Unique indexes: <table>_<columns>_uk
+   
+   TYPE NAMING:
+   - Format: <prefix>_<purpose>_type
+   - Examples: xx_employee_record_type
+   - Use for complex data structures
+   - Document all attributes
+
+b) Object Discovery and Documentation Standards:
+   
+   - Always inspect object definition before use
+   - Document all referenced columns and their types
+   - List all parameters and return values
+   - Note any security or performance constraints
+   - Include example usage in code comments
+   
+   Query to find object definitions:
+   ```sql
+   -- Find table columns
+   SELECT COLUMN_NAME, DATA_TYPE, DATA_LENGTH, NULLABLE
+   FROM   USER_TAB_COLUMNS
+   WHERE  TABLE_NAME = 'XXCICD_EMP'
+   ORDER BY COLUMN_ID;
+   
+   -- Find procedure parameters
+   SELECT ARGUMENT_NAME, DATA_TYPE, IN_OUT
+   FROM   USER_ARGUMENTS
+   WHERE  OBJECT_NAME = 'XX_INSERT_EMP_PR'
+   ORDER BY POSITION;
+   
+   -- Find foreign key constraints
+   SELECT CONSTRAINT_NAME, R_OWNER, R_TABLE_NAME
+   FROM   USER_CONSTRAINTS
+   WHERE  TABLE_NAME = 'EMP' AND CONSTRAINT_TYPE = 'R';
+   
+   -- Find sequences
+   SELECT SEQUENCE_NAME, INCREMENT_BY, CYCLE_FLAG
+   FROM   USER_SEQUENCES
+   WHERE  SEQUENCE_NAME LIKE 'XX%';
+   ```
+
+c) Code Reference Standards:
+   
+   - When referencing table columns in SQL, use:
+     * Table alias: E.EMPLOYEE_ID (not EMPLOYEE_ID or E.ID)
+     * Column alias: E.EMPLOYEE_ID AS EMP_ID
+     * Data type from table: XXCICD_EMP.EMPLOYEE_ID%TYPE
+   
+   - When referencing functions:
+     * Full function name: XXCICD_CALCULATE_BONUS_FN(p_emp_id, p_salary)
+     * Document expected input types
+     * Handle NULL returns with NVL or COALESCE
+   
+   - When referencing procedures:
+     * Full procedure name: XXMIG_GENERATE_CSV_PR(p_emp_id, p_output)
+     * Document all IN/OUT parameters
+     * Check execution result with SQL%ROWCOUNT
+   
+   - When referencing packages:
+     * Full package reference: XXCICD_UTILS_PKG.CALCULATE_BONUS(...)
+     * Use appropriate public procedures only
+     * Document package exceptions
+   
+   - When referencing sequences:
+     * Use SEQUENCE_NAME.NEXTVAL for ID generation
+     * Use SEQUENCE_NAME.CURRVAL to get last inserted ID
+     * Example: EMP_SEQ.NEXTVAL for new employee ID
+   
+   - When referencing views:
+     * Treat as read-only data sources
+     * Document base tables in joins
+     * Use table alias: V.COLUMN_NAME
+     * Never try to UPDATE or DELETE through view
+   
+   - When referencing synonyms:
+     * Use synonym name transparently
+     * Synonym resolves to actual object at runtime
+     * Example: SELECT * FROM XXCICD_EMPLOYEES (synonym for EMP)
+
+18. CODE SUGGESTIONS BASED ON DATABASE OBJECT METADATA
+--------------------------------------------------
+a) Automatic Code Generation Rules:
+   
+   When writing SQL Queries:
+   1. Inspect table structure first
+   2. Extract all column names and their data types
+   3. Use explicit columns (never SELECT *)
+   4. Map page items to correct column data types
+   5. Include all necessary columns for processing
+   
+   Example - Database Object Inspection:
+   
+   Table: XXCICD_EMP
+   Columns:
+   ├─ ID (NUMBER) - Primary Key
+   ├─ NAME (VARCHAR2(100)) - Employee Name
+   ├─ DEPARTMENT (VARCHAR2(50)) - Department
+   ├─ SALARY (NUMBER) - Salary Amount
+   ├─ HIRE_DATE (DATE) - Hire Date
+   ├─ STATUS (VARCHAR2(20)) - Employee Status
+   └─ CREATED_DATE (DATE) - Record Creation Date
+   
+   ✓ CORRECT SQL Query (based on object metadata):
+   ```sql
+   SELECT E.ID          AS EMP_ID,
+          E.NAME        AS EMPLOYEE_NAME,
+          E.DEPARTMENT  AS EMP_DEPARTMENT,
+          E.SALARY      AS EMPLOYEE_SALARY,
+          E.HIRE_DATE   AS EMP_HIRE_DATE,
+          E.STATUS      AS EMP_STATUS
+   FROM   XXCICD_EMP E
+   WHERE  E.STATUS = 'ACTIVE'
+   ORDER BY E.NAME;
+   ```
+   
+   ✗ WRONG (without metadata inspection):
+   ```sql
+   SELECT * FROM XXCICD_EMP WHERE ID = :P1_ID;
+   ```
+
+b) PL/SQL Variable Mapping Rules:
+   
+   When writing PL/SQL processes that interact with database objects:
+   1. Identify all tables and columns to be used
+   2. Create variables matching column data types using %TYPE
+   3. Use descriptive variable names with proper prefixes
+   4. Document the column→variable relationship
+   
+   Example - PL/SQL with Database Metadata:
+   
+   ```plsql
+   DECLARE
+       -- Table: XXCICD_EMP
+       ln_emp_id       XXCICD_EMP.ID%TYPE;              -- ID column (NUMBER)
+       lc_emp_name     XXCICD_EMP.NAME%TYPE;            -- NAME column (VARCHAR2)
+       lc_department   XXCICD_EMP.DEPARTMENT%TYPE;      -- DEPARTMENT (VARCHAR2)
+       ln_salary       XXCICD_EMP.SALARY%TYPE;          -- SALARY (NUMBER)
+       ld_hire_date    XXCICD_EMP.HIRE_DATE%TYPE;       -- HIRE_DATE (DATE)
+       lc_status       XXCICD_EMP.STATUS%TYPE;          -- STATUS (VARCHAR2)
+       lr_emp_record   XXCICD_EMP%ROWTYPE;              -- Full row record
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_EMP_FETCH');
+       
+       -- Input parameters from page items
+       ln_emp_id := :P1_EMP_ID;
+       
+       APEX_DEBUG.MESSAGE('Fetching employee ID: ' || ln_emp_id);
+       
+       -- Query using correct columns and data types
+       SELECT E.ID, E.NAME, E.DEPARTMENT, E.SALARY, E.HIRE_DATE, E.STATUS
+       INTO   ln_emp_id, lc_emp_name, lc_department, ln_salary, ld_hire_date, lc_status
+       FROM   XXCICD_EMP E
+       WHERE  E.ID = ln_emp_id;
+       
+       -- Set page items with correct data types
+       :P1_NAME := lc_emp_name;
+       :P1_DEPARTMENT := lc_department;
+       :P1_SALARY := ln_salary;
+       :P1_HIRE_DATE := ld_hire_date;
+       :P1_STATUS := lc_status;
+       
+       APEX_DEBUG.MESSAGE('End: PR_EMP_FETCH - Success');
+   EXCEPTION
+       WHEN NO_DATA_FOUND THEN
+           APEX_DEBUG.ERROR('Employee ID not found: ' || ln_emp_id);
+           RAISE_APPLICATION_ERROR(-20001, 'Employee not found');
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+c) Foreign Key Relationship Mapping:
+   
+   When referencing related tables via foreign keys:
+   1. Identify all ref_constraints for the table
+   2. Map parent-child table relationships
+   3. Use JOIN syntax with proper aliases
+   4. Include all columns needed for display and validation
+   
+   Example - Foreign Key Relationships:
+   
+   Constraint: EMP.DEPT_ID → DEPT.ID (ref_constraint)
+   
+   ```sql
+   -- CORRECT: Include related table columns
+   SELECT E.ID          AS EMP_ID,
+          E.NAME        AS EMP_NAME,
+          E.DEPT_ID,
+          D.DEPT_ID     AS DEPT_ID,
+          D.DEPT_NAME   AS DEPT_NAME
+   FROM   XXCICD_EMP E
+   JOIN   XXCICD_DEPT D ON E.DEPT_ID = D.DEPT_ID
+   WHERE  E.STATUS = 'ACTIVE'
+   ORDER BY E.NAME;
+   ```
+
+d) Package and Function Usage Guidelines:
+   
+   When calling package procedures or functions:
+   1. Inspect package specification for parameters
+   2. Document all IN, OUT, and IN/OUT parameters
+   3. Map page items to procedure parameters
+   4. Handle return values and OUT parameters
+   5. Capture error messages from package exceptions
+   
+   Example - Package Procedure Call:
+   
+   Package: XXCICD_UTILS_PKG
+   Procedure: CALCULATE_BONUS (
+       p_emp_id     IN NUMBER,
+       p_salary     IN NUMBER,
+       p_bonus      OUT NUMBER,
+       p_message    OUT VARCHAR2
+   )
+   
+   Usage in APEX Process:
+   ```plsql
+   DECLARE
+       ln_emp_id      XXCICD_EMP.ID%TYPE;
+       ln_salary      XXCICD_EMP.SALARY%TYPE;
+       ln_bonus       NUMBER;
+       lc_message     VARCHAR2(1000);
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_CALC_BONUS');
+       
+       -- Read from page items
+       ln_emp_id := :P1_EMP_ID;
+       ln_salary := :P1_SALARY;
+       
+       -- Call package procedure with documented parameters
+       XXCICD_UTILS_PKG.CALCULATE_BONUS(
+           p_emp_id   => ln_emp_id,
+           p_salary   => ln_salary,
+           p_bonus    => ln_bonus,
+           p_message  => lc_message
+       );
+       
+       -- Store output in page items
+       :P1_BONUS := ln_bonus;
+       :P1_MESSAGE := lc_message;
+       
+       APEX_DEBUG.MESSAGE('Bonus calculated: ' || ln_bonus);
+       APEX_DEBUG.MESSAGE('End: PR_CALC_BONUS - Success');
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error in PR_CALC_BONUS: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+e) Sequence and Index Usage:
+   
+   When using sequences for ID generation:
+   1. Identify appropriate sequence for table
+   2. Use NEXTVAL for generating new IDs
+   3. Capture CURRVAL for setting page items
+   4. Log sequence usage in APEX_DEBUG
+   
+   Example - Sequence Usage:
+   
+   ```plsql
+   DECLARE
+       ln_new_emp_id XXCICD_EMP.ID%TYPE;
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_NEW_EMPLOYEE');
+       
+       -- Generate new ID using sequence
+       ln_new_emp_id := EMP_SEQ.NEXTVAL;
+       
+       APEX_DEBUG.MESSAGE('Generated new employee ID: ' || ln_new_emp_id);
+       
+       -- Insert new employee
+       INSERT INTO XXCICD_EMP (ID, NAME, SALARY)
+       VALUES (ln_new_emp_id, :P1_NAME, :P1_SALARY);
+       
+       -- Set return page item
+       :P1_EMP_ID := ln_new_emp_id;
+       
+       APEX_DEBUG.MESSAGE('Employee inserted with ID: ' || ln_new_emp_id);
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+f) Dynamic SQL Query Generation (Advanced):
+   
+   When building dynamic queries based on database metadata:
+   1. Query USER_TAB_COLUMNS for table structure
+   2. Build SELECT list dynamically with column names
+   3. Use Execute Immediate for dynamic SQL
+   4. Always validate and bind parameters
+   
+   Example - Dynamic Query:
+   
+   ```plsql
+   DECLARE
+       lc_query    VARCHAR2(4000);
+       lc_where    VARCHAR2(1000);
+       ln_count    NUMBER;
+   BEGIN
+       APEX_DEBUG.MESSAGE('Start: PR_DYNAMIC_QUERY');
+       
+       -- Build dynamic WHERE clause
+       lc_where := ' WHERE STATUS = :P1_STATUS ';
+       
+       -- Build SELECT with explicit columns
+       lc_query := 'SELECT ID, NAME, SALARY FROM XXCICD_EMP' || lc_where;
+       
+       APEX_DEBUG.MESSAGE('Executing query: ' || lc_query);
+       
+       -- Execute with bound parameters
+       EXECUTE IMMEDIATE lc_query INTO ... USING :P1_STATUS;
+       
+       APEX_DEBUG.MESSAGE('End: PR_DYNAMIC_QUERY - Success');
+   EXCEPTION
+       WHEN OTHERS THEN
+           APEX_DEBUG.ERROR('Dynamic query error: ' || SQLERRM);
+           RAISE;
+   END;
+   ```
+
+g) Query Design Checklist:
+   
+   Before writing any SQL query or PL/SQL process:
+   ☑ Identify all tables and their aliases (E, D, etc.)
+   ☑ List all required columns (with data types)
+   ☑ Document foreign key relationships (JOINs)
+   ☑ Identify any functions or procedures needed
+   ☑ Determine sequences for ID generation
+   ☑ Plan any index usage for performance
+   ☑ Map columns to page items (data type matching)
+   ☑ Write WHERE clauses with specific filters
+   ☑ Use %TYPE for all variable declarations
+   ☑ Document all assumptions and dependencies
+
+h) Database Object Column Inspection Standard (Critical for Code Review):
+
+   MANDATORY STEPS before code generation or review:
+   
+   Step 1: Query USER_TAB_COLUMNS to get ACTUAL column definitions
+   ```sql
+   SELECT COLUMN_NAME, DATA_TYPE, DATA_LENGTH, DATA_PRECISION, DATA_SCALE
+   FROM   USER_TAB_COLUMNS
+   WHERE  TABLE_NAME = 'XXCICD_EMP'
+   ORDER BY COLUMN_ID;
+   ```
+   
+   Step 2: Query USER_TAB_COLS to get additional column metadata
+   ```sql
+   SELECT COLUMN_NAME, DATA_DEFAULT, NULLABLE
+   FROM   USER_TAB_COLS
+   WHERE  TABLE_NAME = 'XXCICD_EMP'
+   ORDER BY COLUMN_ID;
+   ```
+   
+   Step 3: Query ALL_COL_COMMENTS for column documentation
+   ```sql
+   SELECT COLUMN_NAME, COMMENTS
+   FROM   ALL_COL_COMMENTS
+   WHERE  TABLE_NAME = 'XXCICD_EMP'
+   AND    OWNER = 'WKSP_EBS2CLOUD_MIGRATION';
+   ```
+   
+   Step 4: Query USER_CONSTRAINTS for column constraints
+   ```sql
+   SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+   FROM   USER_CONSTRAINTS
+   WHERE  TABLE_NAME = 'XXCICD_EMP'
+   ORDER BY CONSTRAINT_NAME;
+   ```
+   
+   ACTUAL COLUMN STRUCTURE FORMAT REQUIRED IN REVIEWS:
+   
+   Table: [TABLE_NAME]
+   ├─ Owner: [SCHEMA_NAME]
+   ├─ Type: TABLE | VIEW | SYNONYM
+   ├─ Columns:
+   │  ├─ COLUMN_NAME (DATA_TYPE, Length: DATA_LENGTH, Precision: P, Scale: S)
+   │  ├─ Column documentation (from ALL_COL_COMMENTS)
+   │  └─ [REPEAT FOR EACH COLUMN]
+   └─ Constraints: [IF ANY]
+
+   EXAMPLE - CORRECT FORMAT:
+   
+   Table: XXCICD_EMP
+   ├─ Owner: WKSP_EBS2CLOUD_MIGRATION
+   ├─ Type: TABLE (HEAP TABLE)
+   ├─ Columns:
+   │  ├─ ID (NUMBER) - Primary Key identifier
+   │  ├─ NAME (VARCHAR2(50)) - Employee full name
+   │  ├─ AGE (NUMBER(3,0)) - Employee age, max 999
+   │  ├─ SALARY (NUMBER) - Salary amount
+   │  └─ NEW (NUMBER) - Status flag column
+   └─ Constraints: None documented
+
+   CRITICAL VALIDATION RULES:
+   
+   ✓ Rule 1: ALWAYS execute metadata queries BEFORE writing code examples
+   ✓ Rule 2: NEVER assume column names or data types from application code
+   ✓ Rule 3: NEVER use generic column types (e.g., "VARCHAR2(100)")
+      Use EXACT lengths from USER_TAB_COLUMNS (e.g., "VARCHAR2(50)")
+   ✓ Rule 4: ALWAYS document precision/scale for NUMBER columns
+      Wrong: SALARY NUMBER
+      Right: SALARY (NUMBER) - represents monetary value
+   ✓ Rule 5: Document constraints (NOT NULL, DEFAULT, CHECK)
+      if they exist in USER_TAB_COLUMNS or USER_CONSTRAINTS
+   ✓ Rule 6: For each column, verify: Name, Type, Length, Precision, Scale
+   ✓ Rule 7: When referencing columns in code examples, use exact case
+      from USER_TAB_COLUMNS (usually UPPERCASE for Oracle tables)
+   ✓ Rule 8: Create variable names that match column data types exactly
+      Wrong: lc_age VARCHAR2(10); (mismatch with NUMBER column)
+      Right: ln_age XXCICD_EMP.AGE%TYPE;
+   ✓ Rule 9: For VARCHAR2 columns with specific lengths, document them
+      Wrong: lc_name VARCHAR2(100);
+      Right: lc_name XXCICD_EMP.NAME%TYPE; -- VARCHAR2(50)
+   ✓ Rule 10: Include PRECISION and SCALE for numeric columns in comments
+      Example: ln_age NUMBER(3,0) -- max 999, age cannot be decimal
+
+i) Detection Process for Code Review - Database Object Validation:
+
+   When reviewing application code that references database objects:
+   
+   DETECTION PROCESS:
+   
+   1. IDENTIFY OBJECTS:
+      └─ Scan code for table/view/synonym references
+      └─ Extract object names (XXCICD_EMP, DEPT, etc.)
+      └─ Record location (file, line number, context)
+   
+   2. RETRIEVE METADATA:
+      └─ Execute metadata queries for each object
+      └─ Capture: COLUMN_NAME, DATA_TYPE, DATA_LENGTH, PRECISION, SCALE
+      └─ Capture: NULLABLE, DATA_DEFAULT, CONSTRAINT info
+      └─ Create authoritative column definition list
+   
+   3. VALIDATE AGAINST CODE:
+      
+      For SQL Queries:
+      └─ Check: Are columns in SELECT list actually in table?
+      └─ Check: Are column names spelled correctly?
+      └─ Check: Are data types compatible with page items?
+      └─ Check: Is alias used consistently (E for XXCICD_EMP)?
+      └─ Check: Are WHERE clause columns indexed?
+      └─ Check: Are column lengths adequate for display?
+      
+      For PL/SQL Variables:
+      └─ Check: Is variable data type matching column type?
+      └─ Check: Is %TYPE anchor used (XXCICD_EMP.COLUMN%TYPE)?
+      └─ Check: Are precision/scale correct for NUMBER types?
+      └─ Check: Are VARCHAR2 lengths matching source columns?
+      
+      For Procedures/Functions:
+      └─ Check: Do IN parameters match table column types?
+      └─ Check: Do OUT parameters match return data types?
+      └─ Check: Are %TYPE anchors used for parameters?
+   
+   4. FLAG ISSUES:
+      └─ MISMATCH: Column name in code ≠ actual table column
+      └─ MISMATCH: Data type in code ≠ actual column type
+      └─ MISMATCH: Data length in code < required length
+      └─ MISSING: Required column not in SELECT/INSERT
+      └─ WRONG: Hardcoded data types instead of %TYPE anchors
+      └─ UNUSED: Column listed but never used in WHERE/JOIN
+   
+   5. GENERATE REPORT:
+      └─ List actual columns from metadata (from USER_TAB_COLUMNS)
+      └─ List columns used in code
+      └─ Highlight discrepancies with exact line numbers
+      └─ Provide corrected code with proper data types
+
+j) Example - XXCICD_EMP Column Detection & Validation:
+
+   ACTUAL METADATA (from USER_TAB_COLUMNS):
+   ┌─────────────────────────────────────────────┐
+   │ COLUMN_NAME │ DATA_TYPE  │ LENGTH │ PREC │ SCALE │
+   ├─────────────┼────────────┼────────┼──────┼───────┤
+   │ ID          │ NUMBER     │ NULL   │ NULL │ NULL  │
+   │ NAME        │ VARCHAR2   │ 50     │ NULL │ NULL  │
+   │ AGE         │ NUMBER     │ NULL   │ 3    │ 0     │
+   │ SALARY      │ NUMBER     │ NULL   │ NULL │ NULL  │
+   │ NEW         │ NUMBER     │ NULL   │ NULL │ NULL  │
+   └─────────────────────────────────────────────┘
+
+   CODE UNDER REVIEW (Incorrect):
+   ```sql
+   SELECT E.ID, E.NAME, E.DEPARTMENT, E.SALARY, E.HIRE_DATE
+   FROM   XXCICD_EMP E
+   WHERE  E.DEPARTMENT = 'Sales';
+   ```
+   
+   VALIDATION REPORT:
+   ✓ E.ID              - Valid, exists as ID (NUMBER)
+   ✓ E.NAME            - Valid, exists as NAME (VARCHAR2(50))
+   ✗ E.DEPARTMENT      - INVALID! Column does not exist in XXCICD_EMP
+   ✗ E.HIRE_DATE       - INVALID! Column does not exist in XXCICD_EMP
+   ✓ E.SALARY          - Valid, exists as SALARY (NUMBER)
+   ⚠ Missing columns:  - AGE (NUMBER(3,0)), NEW (NUMBER) not selected
+   
+   CORRECTED CODE:
+   ```sql
+   SELECT E.ID       AS EMP_ID,
+          E.NAME     AS EMPLOYEE_NAME,
+          E.AGE      AS EMPLOYEE_AGE,
+          E.SALARY   AS EMPLOYEE_SALARY,
+          E.NEW      AS STATUS_FLAG
+   FROM   XXCICD_EMP E
+   WHERE  E.AGE >= :P_MIN_AGE
+   ORDER BY E.NAME;
+   ```
+
+END OF STANDARDS DOCUMENT
